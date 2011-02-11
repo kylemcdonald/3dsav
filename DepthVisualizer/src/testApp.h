@@ -2,7 +2,7 @@
 
 #include "ofMain.h"
 
-#include "ofxControlPanel.h"
+#include "ofxAutoControlPanel.h"
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
 #include "Animation.h"
@@ -30,4 +30,6 @@ class testApp : public ofBaseApp {
 		Animation animation;
 		
 		ofxCvGrayscaleImage depthImage;
+		
+		ofxAutoControlPanel panel;
 };

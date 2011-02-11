@@ -1,6 +1,6 @@
 #include "testApp.h"
 
-const int useKinect = false;
+const int useKinect = true;
 
 //--------------------------------------------------------------
 void testApp::setup() {
@@ -20,14 +20,30 @@ void testApp::setup() {
 	}
 	
 	depthImage.allocate(camWidth, camHeight);
+	
+	panel.setup("Control Panel", 5, 5, 300, 600);
+	panel.addPanel("Threshold and Scale");
+	panel.addSlider("near threshold", "nearThreshold", 10, 10, 500);
+	panel.addSlider("far threshold", "farThreshold", 500, 10, 500);
+	panel.addSlider("depth scale", "depthScale", 5, 1, 20);
+	panel.addSlider("depth offset", "depthOffset", 128, 0, 255);
+	panel.addSlider("step size", "stepSize", 2, 1, 4, true);
+	panel.addSlider("point size", "pointSize", 1, 1, 10, true);
+	panel.addToggle("draw zeros", "drawZeros", false);
 }
 
 //--------------------------------------------------------------
 void testApp::update() {
 	if(useKinect) {
+		if(panel.hasValueChanged("nearThreshold") || panel.hasValueChanged("farThreshold")) {
+			float nearClipping = panel.getValueF("nearThreshold");
+			float farClipping = panel.getValueF("farThreshold");
+			kinect.getCalibration().setClippingInCentimeters(nearClipping, farClipping);
+			panel.clearAllChanged();
+		}
+		
 		kinect.update();
 		if(kinect.isFrameNew()) {
-			kinect.calibration.setClippingInCentimeters(20, 200);
 			depthImage.setFromPixels(kinect.getDepthPixels(), camWidth, camHeight);
 			depthImage.flagImageChanged();
 		}
@@ -45,6 +61,11 @@ void testApp::update() {
 void testApp::draw() {
 	ofBackground(0, 0, 0);
 	
+	ofPushMatrix();
+	
+	// center everything
+	ofTranslate((ofGetWidth() - camWidth) / 2, 0, 0);
+	
 	ofSetColor(255, 255, 255);
 	depthImage.draw(0, 0);
 	
@@ -56,29 +77,33 @@ void testApp::draw() {
 	drawPointCloud();
 	ofPopMatrix();
 	
-	ofSetColor(255, 0, 0);
-	ofDrawBitmapString(ofToString((int) ofGetFrameRate()), 10, 20);
+	ofPopMatrix();
 }
 
 //--------------------------------------------------------------
 void testApp::drawPointCloud() {
 	if(useKinect) {
-		ofScale(1, 1, 6);
-		ofTranslate(0, 0, -200);
+		ofScale(1, 1, panel.getValueF("depthScale"));
+		ofTranslate(0, 0, -panel.getValueF("depthOffset"));
 	} else {
 		ofScale(1, 1, 2.5);
 		ofTranslate(0, 0, -128);
 	}
 	
 	unsigned char* depthPixels = depthImage.getPixels();
+	glEnable(GL_POINT_SMOOTH);
+	glPointSize(panel.getValueF("pointSize"));
 	glBegin(GL_POINTS);
-	int step = 2;
+	int step = panel.getValueI("stepSize");
+	bool drawZeroes = panel.getValueB("drawZeros");
 	for(int y = 0; y < camHeight; y += step) {
 		for(int x = 0; x < camWidth; x += step) {
 			int i = y * camWidth + x;
 			// this is an orthographic projection,
 			// which isn't really 'correct'
-			glVertex3f(x, y, depthPixels[i]);
+			if(!(depthPixels[i] == 0 && !drawZeroes)) {
+				glVertex3f(x, y, depthPixels[i]);
+			}
 		}
 	}
 	glEnd();
