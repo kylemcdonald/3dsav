@@ -17,3 +17,16 @@ if you change the variable 'useKinect' at the top of testApp.cpp to 'false', the
 the animation is stored as a sequence of RGBA PNGs, where the alpha encodes depth information.
 
 recording from the kinect into this format is left as an 'exercise for the reader' at the moment ;)
+
++ + + + 
+
+control panel needs ofxXmlSettings and ofxDirList addons in the project. 
+
++ + + + 
+
+the optical flow example w features, and good features are modified code from simongeilfus: 
+http://www.openframeworks.cc/forum/viewtopic.php?p=16428
+
+the optical flow add-on ofxOpticalFlowLK is from http://code.google.com/p/julapy/
+
++ + + + 
