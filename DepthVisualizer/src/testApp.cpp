@@ -14,6 +14,12 @@ void testApp::setup() {
 		kinect.init();
 		kinect.setVerbose(true);
 		kinect.open();
+		
+		
+		// this is setting the raw data conversion range
+		// we assume that 100 to 300 CM (1 - 3 meters) is good for tracking a person in space
+		kinect.getCalibration().setClippingInCentimeters(100, 300);
+		
 	} else {
 		animation.load("janus-1283433262");
 		cout << "Animation length is " << animation.size() << " frames." << endl;
@@ -26,8 +32,8 @@ void testApp::setup() {
 	panel.addPanel("Control");
 	
 	panel.setWhichPanel("Threshold and Scale");
-	panel.addSlider("near threshold", "nearThreshold", 10, 10, 500);
-	panel.addSlider("far threshold", "farThreshold", 500, 10, 500);
+	panel.addSlider("near threshold", "nearThreshold", 0, 0, 255, true);
+	panel.addSlider("far threshold", "farThreshold", 255, 0, 255, true);
 	panel.addSlider("depth scale", "depthScale", 5, 1, 20);
 	panel.addSlider("depth offset", "depthOffset", 128, 0, 255);
 	panel.addSlider("step size", "stepSize", 2, 1, 4, true);
@@ -42,13 +48,6 @@ void testApp::setup() {
 //--------------------------------------------------------------
 void testApp::update() {
 	if(useKinect) {
-		if(panel.hasValueChanged("nearThreshold") || panel.hasValueChanged("farThreshold")) {
-			float nearClipping = panel.getValueF("nearThreshold");
-			float farClipping = panel.getValueF("farThreshold");
-			kinect.getCalibration().setClippingInCentimeters(nearClipping, farClipping);
-			panel.clearAllChanged();
-		}
-		
 		kinect.update();
 		if(kinect.isFrameNew()) {
 			depthImage.setFromPixels(kinect.getDepthPixels(), camWidth, camHeight);
@@ -62,6 +61,29 @@ void testApp::update() {
 	}
 	
 	// do processing here on depthImage
+	
+	
+	
+	//if(panel.hasValueChanged("nearThreshold") || panel.hasValueChanged("farThreshold")) {
+	//	float nearClipping = panel.getValueF("nearThreshold");
+	//	float farClipping = panel.getValueF("farThreshold");
+	//	panel.clearAllChanged();
+	//}
+	
+	unsigned char* depthPixels = depthImage.getPixels();
+	int nearThresh =  panel.getValueF("nearThreshold");
+	int farThresh =  panel.getValueF("farThreshold");
+	
+	for(int y = 0; y < camHeight; y++) {
+		for(int x = 0; x < camWidth; x++) {
+			int i = y * camWidth + x;
+			if (depthPixels[i] <  nearThresh  || depthPixels[i] >= farThresh){
+				depthPixels[i] = 0;
+			}
+		}
+	}
+	
+	
 }
 
 //--------------------------------------------------------------
