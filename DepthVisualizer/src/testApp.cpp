@@ -23,6 +23,9 @@ void testApp::setup() {
 	
 	panel.setup("Control Panel", 5, 5, 300, 600);
 	panel.addPanel("Threshold and Scale");
+	panel.addPanel("Control");
+	
+	panel.setWhichPanel("Threshold and Scale");
 	panel.addSlider("near threshold", "nearThreshold", 10, 10, 500);
 	panel.addSlider("far threshold", "farThreshold", 500, 10, 500);
 	panel.addSlider("depth scale", "depthScale", 5, 1, 20);
@@ -30,6 +33,10 @@ void testApp::setup() {
 	panel.addSlider("step size", "stepSize", 2, 1, 4, true);
 	panel.addSlider("point size", "pointSize", 1, 1, 10, true);
 	panel.addToggle("draw zeros", "drawZeros", false);
+	
+	panel.setWhichPanel("Control");
+	panel.addSlider("rotate y axis", "rotateY", 0, -360, 360, false);	
+	panel.addToggle("draw debug", "drawDebug", false);
 }
 
 //--------------------------------------------------------------
@@ -59,25 +66,37 @@ void testApp::update() {
 
 //--------------------------------------------------------------
 void testApp::draw() {
+	
+	
 	ofBackground(0, 0, 0);
 	
-	ofPushMatrix();
+	// draw debug or non debug
 	
-	// center everything
-	ofTranslate((ofGetWidth() - camWidth) / 2, 0, 0);
-	
-	ofSetColor(255, 255, 255);
-	depthImage.draw(0, 0);
-	
-	ofPushMatrix();
-	ofTranslate(0, camHeight);
-	ofTranslate(camWidth / 2, camHeight / 2);
-	ofRotateY(ofMap(mouseX, 0, ofGetWidth(), -180, 180));
-	ofTranslate(-camWidth / 2, -camHeight / 2);
-	drawPointCloud();
-	ofPopMatrix();
-	
-	ofPopMatrix();
+	if (panel.getValueB("drawDebug")){
+		ofPushMatrix();
+		// center everything
+		ofTranslate((ofGetWidth() - camWidth) / 2, 0, 0);
+		ofSetColor(255, 255, 255);
+		depthImage.draw(0, 0);
+		ofPushMatrix();
+		ofTranslate(0, camHeight);
+		ofTranslate(camWidth / 2, camHeight / 2);
+		ofRotateY(panel.getValueF("rotateY"));
+		ofTranslate(-camWidth / 2, -camHeight / 2);
+		drawPointCloud();
+		ofPopMatrix();
+		ofPopMatrix();
+	} else {
+		ofPushMatrix();
+		// center everything
+		ofTranslate(ofGetWidth()/2, ofGetWidth()/2, 0);
+		ofSetColor(255, 255, 255);
+		ofRotateY(panel.getValueF("rotateY"));
+		ofTranslate(-camWidth / 2, -camHeight / 2);
+		drawPointCloud();
+		ofPopMatrix();
+		
+	}
 }
 
 //--------------------------------------------------------------
