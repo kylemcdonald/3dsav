@@ -5,7 +5,6 @@
 #include "ofxAutoControlPanel.h"
 #include "DepthVisualizerInput.h"
 
-
 class testApp : public ofBaseApp {
 	
 	public:
@@ -26,12 +25,9 @@ class testApp : public ofBaseApp {
 
 		ofxAutoControlPanel panel;
 
-		float minBound[3];
-		float maxBound[3];
+		ofPoint minBound, maxBound;
 		ofPoint centroid;
 	
 		DepthVisualizerInput input;
-	
-	
 	
 };

@@ -86,6 +86,20 @@ void ofBox(const ofPoint& position, float size) {
 }
 
 //----------------------------------------
+void ofBox(const ofPoint& farCorner, const ofPoint& nearCorner) {
+	ofPoint size = nearCorner - farCorner;
+	ofPushStyle();
+	ofPushMatrix();
+	ofTranslate(farCorner.x, farCorner.y, farCorner.z);
+	ofScale(size.x, size.y, size.z);
+	ofTranslate(.5, .5, .5);
+	ofNoFill();
+	ofBox(1);
+	ofPopMatrix();
+	ofPopStyle();
+}
+
+//----------------------------------------
 void ofBox(float size) {
 
 	ofPushMatrix();
@@ -185,3 +199,10 @@ void ofBox(float size) {
 	ofPopMatrix();
 }
 
+ofPoint min(const ofPoint& a, const ofPoint& b) {
+	return ofPoint(min(a.x, b.x), min(a.y, b.y), min(a.z, b.z));
+}
+
+ofPoint max(const ofPoint& a, const ofPoint& b) {
+	return ofPoint(max(a.x, b.x), max(a.y, b.y), max(a.z, b.z));
+}

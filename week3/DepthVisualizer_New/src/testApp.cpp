@@ -31,65 +31,43 @@ void testApp::setup() {
 //--------------------------------------------------------------
 void testApp::update() {
 	
-	
 	input.update();
-		
 	
 	centroid.set(0,0,0);
 	int nPixels = 0;
 	
 	int width = input.depthImage.getWidth();
-    int height = input.depthImage.getHeight();
-    unsigned char * depthPixels = input.depthImage.getPixels();
-    bool needsSetting = true;
-    for(int y = 0; y < height; y++) {
-        for(int x = 0; x < width; x++) {
-            int i = y * width + x;
-            unsigned char curDepthValue = depthPixels[i];
-            if(curDepthValue != 0) {
+	int height = input.depthImage.getHeight();
+	unsigned char * depthPixels = input.depthImage.getPixels();
+	bool needsSetting = true;
+	for(int y = 0; y < height; y++) {
+		for(int x = 0; x < width; x++) {
+			int i = y * width + x;
+			unsigned char curDepthValue = depthPixels[i];
+			if(curDepthValue != 0) {
+				ofPoint curPosition(x, y, curDepthValue);
 				
-				centroid.x += x;
-				centroid.y += y;
-				centroid.z += curDepthValue;
+				if(needsSetting) {
+					maxBound = curPosition;
+					minBound = curPosition;
+					needsSetting = false;
+				} else {
+					maxBound = max(maxBound, curPosition);
+					minBound = min(minBound, curPosition);
+				}
+				
+				centroid += curPosition;
 				nPixels++;
-				
-				
-                float curPosition[] = {x, y, curDepthValue};
-                if(needsSetting) {
-                    for(int j = 0; j < 3; j++) {
-                        maxBound[j] = curPosition[j];
-                        minBound[j] = curPosition[j];
-                    }
-                    needsSetting = false;
-                } else {
-                    for(int j = 0; j < 3; j++) {
-                        if(curPosition[j] > maxBound[j]) {
-                            maxBound[j] = curPosition[j];
-                        }
-                        if(curPosition[j] < minBound[j]) {
-                            minBound[j] = curPosition[j];
-                        }
-                    }
-                }
-            }
-        }
-    }
-	
-	if (nPixels > 0){
-		centroid.x /= (float)nPixels;
-		centroid.y /= (float)nPixels;
-		centroid.z /= (float)nPixels;
+			}
+		}
 	}
 	
-	
+	centroid /= nPixels;	
 	
 }
 
 //--------------------------------------------------------------
 void testApp::draw() {
-	
-	
-	
 	
 	ofBackground(0, 0, 0);
 	
@@ -100,41 +78,36 @@ void testApp::draw() {
 		
 	} else {
 		ofPushMatrix();
-		// center everything
-		ofTranslate(ofGetWidth()/2, ofGetWidth()/2, 0);
-		ofSetColor(255, 255, 255);
-		ofRotateY(panel.getValueF("rotateY"));
-		if (panel.getValueB("autoRotate")){
-			ofRotateY(ofGetElapsedTimef()*5);
-		}
-		ofTranslate(-input.camWidth / 2, -input.camHeight / 2);
 		
-		//drawPointCloud();
-		// draw anything else: 
-		
-		
-		ofLine(minBound[0],minBound[1], minBound[2], maxBound[0],minBound[1], minBound[2]);
-		ofLine(minBound[0],minBound[1], minBound[2], minBound[0],maxBound[1], minBound[2]);
-		ofLine(minBound[0],minBound[1], minBound[2], minBound[0],minBound[1], maxBound[2]);
-		
-		ofBox(centroid.x, centroid.y, centroid.z, 10);
-		
-		
+			// center everything
+			ofTranslate(ofGetWidth()/2, ofGetWidth()/2, 0);
+			ofSetColor(255, 255, 255);
+			ofRotateY(panel.getValueF("rotateY"));
+			if (panel.getValueB("autoRotate")){
+				ofRotateY(ofGetElapsedTimef()*5);
+			}
+			ofTranslate(-input.camWidth / 2, -input.camHeight / 2);
+			
+			//drawPointCloud();
+			
+			// draw anything else: 
+			
+			ofBox(centroid.x, centroid.y, centroid.z, 10);
+			
+			ofBox(minBound, maxBound);
+			
 		ofPopMatrix();
 		
-	
 	}
-
+	
 }
 
 //--------------------------------------------------------------
 void testApp::drawPointCloud() {
-	
 }
 
 //--------------------------------------------------------------
 void testApp::exit() {
-	
 }
 
 //--------------------------------------------------------------
@@ -146,18 +119,18 @@ void testApp::mouseMoved(int x, int y) {
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button)
-{}
+void testApp::mouseDragged(int x, int y, int button) {
+}
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button)
-{}
+void testApp::mousePressed(int x, int y, int button) {
+}
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button)
-{}
+void testApp::mouseReleased(int x, int y, int button) {
+}
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h)
-{}
+void testApp::windowResized(int w, int h) {
+}
 
