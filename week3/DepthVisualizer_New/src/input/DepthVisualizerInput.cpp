@@ -43,7 +43,7 @@ void DepthVisualizerInput::update(){
 			depthImage.flagImageChanged();
 		}
 	} else {
-		int frame = ((int)(ofGetFrameNum())) % animation.size();
+		int frame = ((int)(ofGetFrameNum() * 0.5)) % animation.size();
 		cout << frame << endl;
 		ofImage& cur = animation.getAlpha(frame);
 
@@ -122,7 +122,7 @@ void DepthVisualizerInput::update(){
 					float pct = depthPixels[i] / 255.0;
 					
 					
-					float zval = rawNearThreshold + pct * (rawFarThreshold - rawNearThreshold);
+					float zval = rawNearThreshold + (1-pct) * (rawFarThreshold - rawNearThreshold);
 					
 					float z = zval / 100.0f;
 					ofPoint result;
