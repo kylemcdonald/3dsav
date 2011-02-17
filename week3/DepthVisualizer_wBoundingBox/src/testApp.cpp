@@ -31,8 +31,8 @@ void testApp::setup() {
 	panel.addPanel("Control");
 	
 	panel.setWhichPanel("Threshold and Scale");
-	panel.addSlider("near threshold", "nearThreshold", 0, 0, 255, true);
-	panel.addSlider("far threshold", "farThreshold", 255, 0, 255, true);
+	panel.addSlider("near threshold", "nearThreshold", 255, 0, 255, true);
+	panel.addSlider("far threshold", "farThreshold", 0, 0, 255, true);
 	panel.addSlider("depth scale", "depthScale", 5, 1, 20);
 	panel.addSlider("depth offset", "depthOffset", 128, 0, 255);
 	panel.addSlider("step size", "stepSize", 2, 1, 4, true);
@@ -72,7 +72,7 @@ void testApp::update() {
 	for(int y = 0; y < camHeight; y++) {
 		for(int x = 0; x < camWidth; x++) {
 			int i = y * camWidth + x;
-			if (depthPixels[i] <  nearThresh  || depthPixels[i] >= farThresh){
+			if (depthPixels[i] <  farThresh  || depthPixels[i] >= nearThresh){
 				depthPixels[i] = 0;
 			}
 		}
