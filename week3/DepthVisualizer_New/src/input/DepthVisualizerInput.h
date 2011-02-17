@@ -1,12 +1,3 @@
-/*
- *  DepthVisualizerInput.h
- *  DepthVisualizer
- *
- *  Created by zachary lieberman on 2/16/11.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
-
 #pragma once
 
 #include "ofMain.h"
@@ -16,20 +7,33 @@
 #include "scanDataPlayer.h"
 #include "ofx3dGraphics.h"
 
-
 class DepthVisualizerInput {
 
 public: 
 	
+	// you can get three things from this class
+	
+	// 1) grayscale depth image
+	ofxCvGrayscaleImage depthImage;
+	
+	// 2) raw floating point image
+	vector<float> rawDepth;
+	
+	// 3) point cloud of projected points
+	vector<ofPoint> pointCloud;
+	
 	int camWidth, camHeight;
+	float rawFarThreshold, rawNearThreshold;
 	
 	ofxKinect kinect;
 	scanDataPlayer animation;
-	ofxCvGrayscaleImage depthImage;
 	
-	void setup();
+	ofxControlPanel* panel;
+	void setup(ofxControlPanel& panel);
 	void update();
 	void drawDebug();
+	void drawOrthographic();
+	void drawPerspective();
 	
 	void exit();
 

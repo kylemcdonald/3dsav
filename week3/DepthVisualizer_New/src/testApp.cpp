@@ -4,7 +4,7 @@
 void testApp::setup() {
 	ofSetFrameRate(60);
 	
-	input.setup();  // < -- could pass in useKinnect here?
+	input.setup(panel);  // < -- could pass in useKinnect here?
 	
 	panel.setup("Control Panel", 5, 5, 300, 600);
 	panel.addPanel("Threshold and Scale");
@@ -38,28 +38,23 @@ void testApp::update() {
 	
 	int width = input.depthImage.getWidth();
 	int height = input.depthImage.getHeight();
-	unsigned char * depthPixels = input.depthImage.getPixels();
+	
+	vector<ofPoint>& pointCloud = input.pointCloud;
 	bool needsSetting = true;
-	for(int y = 0; y < height; y++) {
-		for(int x = 0; x < width; x++) {
-			int i = y * width + x;
-			unsigned char curDepthValue = depthPixels[i];
-			if(curDepthValue != 0) {
-				ofPoint curPosition(x, y, curDepthValue);
-				
-				if(needsSetting) {
-					maxBound = curPosition;
-					minBound = curPosition;
-					needsSetting = false;
-				} else {
-					maxBound = max(maxBound, curPosition);
-					minBound = min(minBound, curPosition);
-				}
-				
-				centroid += curPosition;
-				nPixels++;
-			}
+	for(int i = 0; i < pointCloud.size(); i++) {
+		ofPoint cur = pointCloud[i];
+		
+		if(needsSetting) {
+			maxBound = cur;
+			minBound = cur;
+			needsSetting = false;
+		} else {
+			maxBound = max(maxBound, cur);
+			minBound = min(minBound, cur);
 		}
+		
+		centroid += cur;
+		nPixels++;
 	}
 	
 	centroid /= nPixels;	
@@ -86,9 +81,10 @@ void testApp::draw() {
 			if (panel.getValueB("autoRotate")){
 				ofRotateY(ofGetElapsedTimef()*5);
 			}
-			ofTranslate(-input.camWidth / 2, -input.camHeight / 2);
 			
-			//drawPointCloud();
+			ofScale(3,3,3); // zoom in so 1 cm = 3 pixels
+			
+			input.drawPerspective();
 			
 			// draw anything else: 
 			
@@ -100,10 +96,6 @@ void testApp::draw() {
 		
 	}
 	
-}
-
-//--------------------------------------------------------------
-void testApp::drawPointCloud() {
 }
 
 //--------------------------------------------------------------
