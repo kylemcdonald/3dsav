@@ -5,7 +5,9 @@
 #include "ofxAutoControlPanel.h"
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
-#include "Animation.h"
+#include "scanDataPlayer.h"
+#include "ofx3dGraphics.h"
+
 
 class testApp : public ofBaseApp {
 	public:
@@ -27,9 +29,9 @@ class testApp : public ofBaseApp {
 		int camWidth, camHeight;
 
 		ofxKinect kinect;
-		Animation animation;
+		scanDataPlayer animation;
 		
 		ofxCvGrayscaleImage depthImage;
-		
+	
 		ofxAutoControlPanel panel;
 };

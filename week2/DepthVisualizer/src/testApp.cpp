@@ -14,8 +14,7 @@ void testApp::setup() {
 		kinect.init();
 		kinect.setVerbose(true);
 		kinect.open();
-		
-		
+
 		// this is setting the raw data conversion range
 		// we assume that 100 to 300 CM (1 - 3 meters) is good for tracking a person in space
 		kinect.getCalibration().setClippingInCentimeters(100, 300);
@@ -119,6 +118,7 @@ void testApp::draw() {
 		ofPopMatrix();
 		
 	}
+
 }
 
 //--------------------------------------------------------------

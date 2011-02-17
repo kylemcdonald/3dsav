@@ -2,12 +2,12 @@
 
 #include "ofMain.h"
 
-class Animation {
+class scanDataPlayer {
 public:
 	void load(string animationDirectory);
 	void unload();
 	
-	~Animation();
+	~scanDataPlayer();
 	
 	int size() const;
 	ofImage& get(int frameNumber);

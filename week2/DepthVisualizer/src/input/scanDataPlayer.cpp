@@ -1,11 +1,11 @@
-#include "Animation.h"
+#include "scanDataPlayer.h"
 
 #include "ofxDirList.h"
 #include "ofxOpenCv.h"
 
-void Animation::load(string animationDirectory) {
+void scanDataPlayer::load(string scanDirectory) {
 	ofxDirList dir;
-	int n = dir.listDir(animationDirectory);
+	int n = dir.listDir(scanDirectory);
 	for(int i = 0; i < n; i++) {
 		ofImage* cur = new ofImage();
 		
@@ -27,7 +27,7 @@ void Animation::load(string animationDirectory) {
 	}
 }
 
-void Animation::unload() {
+void scanDataPlayer::unload() {
 	for(int i = 0; i < size(); i++) {
 		delete images[i];
 		delete alpha[i];
@@ -35,18 +35,18 @@ void Animation::unload() {
 	images.clear();
 }
 
-Animation::~Animation() {
+scanDataPlayer::~scanDataPlayer() {
 	unload();
 }
 
-int Animation::size() const {
+int scanDataPlayer::size() const {
 	return images.size();
 }
 
-ofImage& Animation::get(int frameNumber) {
+ofImage& scanDataPlayer::get(int frameNumber) {
 	return *(images[frameNumber]);
 }
 
-ofImage& Animation::getAlpha(int frameNumber) {
+ofImage& scanDataPlayer::getAlpha(int frameNumber) {
 	return *(alpha[frameNumber]);
 }
