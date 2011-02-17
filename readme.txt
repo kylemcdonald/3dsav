@@ -1,3 +1,12 @@
+
+
+
+This folder should be placed at the ROOT level of openframeworks, next to apps, libs, etc.  This is because it's organized by weeks, and it just proved easier to organize it this way. 
+
+
++ + + + + + + 
+
+
 first, download the zip file on this page by clicking the 'download' button at the top right.
 
 then download the zip file on https://github.com/ofTheo/ofxKinect.
