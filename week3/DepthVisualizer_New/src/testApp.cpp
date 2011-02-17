@@ -22,9 +22,11 @@ void testApp::setup() {
 	panel.setWhichPanel("Control");
 	panel.addSlider("rotate y axis", "rotateY", 0, -360, 360, false);	
 	panel.addToggle("auto rotate", "autoRotate", false);
-	panel.addToggle("draw scene bounding box", "drawSceneBox", false);
+	panel.addToggle("draw scene bounding frustrum", "drawSceneBox", false);
 	
 	panel.addToggle("draw debug", "drawDebug", false);
+	
+	panel.addToggle("record", "doRecording", false);
 	
 }
 
@@ -75,7 +77,7 @@ void testApp::draw() {
 		ofPushMatrix();
 		
 			// center everything
-			ofTranslate(ofGetWidth()/2, ofGetWidth()/2, 0);
+			ofTranslate(ofGetWidth()/2, ofGetWidth()/2, -500);
 			ofSetColor(255, 255, 255);
 			ofRotateY(panel.getValueF("rotateY"));
 			if (panel.getValueB("autoRotate")){
@@ -88,12 +90,31 @@ void testApp::draw() {
 			
 			// draw anything else: 
 			
-			ofBox(centroid.x, centroid.y, centroid.z, 10);
-			
-			ofBox(minBound, maxBound);
-			
+			if (input.pointCloud.size() > 0){
+				ofBox(centroid.x, centroid.y, centroid.z, 10);
+				ofBox(minBound, maxBound);
+			}
+		
 		ofPopMatrix();
 		
+	}
+	
+	if (panel.getValueB("doRecording")){
+		static int counter= 0;
+		
+		ofImage temp;
+		temp.allocate(640,480, OF_IMAGE_COLOR_ALPHA);
+		unsigned char * colorAlphaPix = temp.getPixels();
+		unsigned char * pix = input.depthImage.getPixels();
+		for(int i = 0; i < 640*480; i++){
+			colorAlphaPix[i*4] = pix[i];
+			colorAlphaPix[i*4+1] = pix[i];
+			colorAlphaPix[i*4+2] = pix[i];
+			colorAlphaPix[i*4+3] = pix[i];
+		}
+		counter++;
+	
+		temp.saveImage("output_" + ofToString(counter) + ".png");
 	}
 	
 }

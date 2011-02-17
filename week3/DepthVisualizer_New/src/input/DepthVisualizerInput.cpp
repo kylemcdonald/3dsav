@@ -1,7 +1,7 @@
 #include "DepthVisualizerInput.h"
 #include "testApp.h"
 
-const int useKinect = true;
+const int useKinect =false;
 
 void DepthVisualizerInput::setup(ofxControlPanel& panel){
 	this->panel = &panel;
@@ -9,7 +9,7 @@ void DepthVisualizerInput::setup(ofxControlPanel& panel){
 	camWidth = 640;
 	camHeight = 480;
 	
-	rawDepth.resize(camWidth * camHeight);
+	rawDepth = new float [camWidth * camHeight]; //.resize(camWidth * camHeight);
 	depthImage.allocate(camWidth, camHeight);
 	
 	if(useKinect) {
@@ -25,7 +25,11 @@ void DepthVisualizerInput::setup(ofxControlPanel& panel){
 		kinect.getCalibration().setClippingInCentimeters(rawNearThreshold, rawFarThreshold);
 		
 	} else {
-		animation.load("janus-1283433262");
+		
+		rawNearThreshold = 100;
+		rawFarThreshold = 300;
+		
+		animation.load("kinectScan");
 		cout << "Animation length is " << animation.size() << " frames." << endl;
 	}
 
@@ -39,8 +43,10 @@ void DepthVisualizerInput::update(){
 			depthImage.flagImageChanged();
 		}
 	} else {
-		int frame = ofGetFrameNum() % animation.size();
+		int frame = ((int)(ofGetFrameNum())) % animation.size();
+		cout << frame << endl;
 		ofImage& cur = animation.getAlpha(frame);
+
 		depthImage.setFromPixels(cur.getPixels(), cur.getWidth(), cur.getHeight());
 		depthImage.flagImageChanged();
 	}
@@ -68,8 +74,8 @@ void DepthVisualizerInput::update(){
 		scale =  panel->getValueF("depthScale");
 		trans = -panel->getValueF("depthOffset");
 	} else {
-		scale = 2.5;
-		trans = -128;
+		scale =  panel->getValueF("depthScale");
+		trans = -panel->getValueF("depthOffset");
 	}
 	for(int y = 0; y < camHeight; y++) {
 		for(int x = 0; x < camWidth; x++) {
@@ -95,6 +101,47 @@ void DepthVisualizerInput::update(){
 				}
 			}
 		}
+	} else {
+		
+		
+		
+		double fx_d = 1.0 / 5.9421434211923247e+02;
+		double fy_d = 1.0 / 5.9104053696870778e+02;
+		float cx_d = 3.3930780975300314e+02;
+		float cy_d = 2.4273913761751615e+02;
+		
+		
+		pointCloud.clear();
+		// this offset will center the data on the center of the scene
+		float offset = -(rawNearThreshold + rawFarThreshold) / 2;
+		for(int y = 0; y < camHeight; y++) {
+			for(int x = 0; x < camWidth; x++) {
+				int i = y * camWidth + x;
+				if(depthPixels[i] != 0) {
+					// ok where are we: 
+					float pct = depthPixels[i] / 255.0;
+					
+					
+					float zval = rawNearThreshold + pct * (rawFarThreshold - rawNearThreshold);
+					
+					float z = zval / 100.0f;
+					ofPoint result;
+					result.x = float((x - cx_d) * z * fx_d);
+					result.y = float((y - cy_d) * z * fy_d);
+					result.z = z;
+					
+					
+					ofxVec3f cur;
+					cur.set(result.x, result.y, result.z);
+					//ofxVec3f cur = kinect.getWorldCoordinateFor((float)x, (float)y, zval/100.0f);
+					cur *= 100; // convert from meters to cm
+					cur.z += offset;
+					pointCloud.push_back(ofPoint(cur));
+				}
+			}
+		}
+		
+		
 	}
 }
 
@@ -129,13 +176,46 @@ void DepthVisualizerInput::drawPerspective() {
 	}
 	glEnd();
 	
-	// i would draw the frustum here using
-	// kinect.getCalibration().getWorldCoordinateFor(0, 0, rawNearThreshold),
-	// ...
-	// kinect.getCalibration().getWorldCoordinateFor(camWidth, camHeight, rawFarThreshold)
-	// but it would be about 20 lines of code and really annoying to read
-	// you would need to do a post-processing that accounts for the fact
-	// that we centered the data above
+	
+	ofSetColor(255,255,255,80);
+	
+	if (panel->getValueB("drawSceneBox")){
+		
+		float offset = -(rawNearThreshold + rawFarThreshold) / 2;
+		
+		ofxPoint3f pts[8];
+		
+		pts[0] =  kinect.getCalibration().getWorldCoordinateFor(0, 0, rawNearThreshold/100.0);
+		pts[1] =  kinect.getCalibration().getWorldCoordinateFor(camWidth, 0, rawNearThreshold/100.0);
+		pts[2] =  kinect.getCalibration().getWorldCoordinateFor(camWidth, camHeight, rawNearThreshold/100.0);
+		pts[3] =  kinect.getCalibration().getWorldCoordinateFor(0, camHeight, rawNearThreshold/100.0);
+		pts[4] =  kinect.getCalibration().getWorldCoordinateFor(0, 0, rawFarThreshold/100.0);
+		pts[5] =  kinect.getCalibration().getWorldCoordinateFor(camWidth, 0, rawFarThreshold/100.0);
+		pts[6] =  kinect.getCalibration().getWorldCoordinateFor(camWidth, camHeight, rawFarThreshold/100.0);
+		pts[7] =  kinect.getCalibration().getWorldCoordinateFor(0, camHeight, rawFarThreshold/100.0);
+		
+		
+		for (int i = 0; i < 8; i++){
+			pts[i]*= 100;
+			pts[i].z += offset;
+		}
+		
+		ofLine(pts[0], pts[1]);
+		ofLine(pts[1], pts[2]);
+		ofLine(pts[2], pts[3]);
+		ofLine(pts[3], pts[0]);
+		
+		ofLine(pts[4], pts[5]);
+		ofLine(pts[5], pts[6]);
+		ofLine(pts[6], pts[7]);
+		ofLine(pts[7], pts[4]);
+		
+		ofLine(pts[0], pts[4]);
+		ofLine(pts[1], pts[5]);
+		ofLine(pts[2], pts[6]);
+		ofLine(pts[3], pts[7]);
+	}
+	
 }
 
 void DepthVisualizerInput::drawDebug(){

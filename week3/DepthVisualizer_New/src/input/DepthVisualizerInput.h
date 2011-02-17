@@ -17,7 +17,7 @@ public:
 	ofxCvGrayscaleImage depthImage;
 	
 	// 2) raw floating point image
-	vector<float> rawDepth;
+	float * rawDepth;
 	
 	// 3) point cloud of projected points
 	vector<ofPoint> pointCloud;
