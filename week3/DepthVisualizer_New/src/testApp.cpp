@@ -85,7 +85,7 @@ void testApp::draw() {
 				ofRotateY(ofGetElapsedTimef()*5);
 			}
 			
-			//ofScale(3,3,3); // zoom in so 1 cm = 3 pixels
+			ofScale(3,3,3); // zoom in so 1 cm = 3 pixels
 			
 			input.drawPerspective();
 			
