@@ -56,10 +56,11 @@ void testApp::update() {
 		}
 		
 		centroid += cur;
-		nPixels++;
 	}
 	
-	centroid /= nPixels;	
+	if(pointCloud.size() > 0) {
+		centroid /= pointCloud.size();
+	}
 	
 }
 
@@ -84,7 +85,7 @@ void testApp::draw() {
 				ofRotateY(ofGetElapsedTimef()*5);
 			}
 			
-			ofScale(3,3,3); // zoom in so 1 cm = 3 pixels
+			//ofScale(3,3,3); // zoom in so 1 cm = 3 pixels
 			
 			input.drawPerspective();
 			
@@ -99,6 +100,7 @@ void testApp::draw() {
 		
 	}
 	
+	/*
 	if (panel.getValueB("doRecording")){
 		static int counter= 0;
 		
@@ -116,6 +118,7 @@ void testApp::draw() {
 	
 		temp.saveImage("output_" + ofToString(counter) + ".png");
 	}
+	*/
 	
 }
 
@@ -125,6 +128,9 @@ void testApp::exit() {
 
 //--------------------------------------------------------------
 void testApp::keyPressed (int key) {
+	if(key == 'f') {
+		ofToggleFullscreen();
+	}
 }
 
 //--------------------------------------------------------------

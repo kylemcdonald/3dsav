@@ -1,7 +1,7 @@
 #include "DepthVisualizerInput.h"
 #include "testApp.h"
 
-const int useKinect =false;
+const int useKinect =true;
 
 void DepthVisualizerInput::setup(ofxControlPanel& panel){
 	this->panel = &panel;
@@ -227,14 +227,14 @@ void DepthVisualizerInput::drawDebug(){
 	ofPushMatrix();
 	ofTranslate(0, camHeight);
 	ofTranslate(camWidth / 2, camHeight / 2);
-	ofRotateY(((testApp * ) ofGetAppPtr())->panel.getValueF("rotateY"));
-	if (((testApp * ) ofGetAppPtr())->panel.getValueB("autoRotate")){
+	ofRotateY(panel->getValueF("rotateY"));
+	if (panel->getValueB("autoRotate")){
 		ofRotateY(ofGetElapsedTimef()*5);
 	}
 	ofTranslate(-camWidth / 2, -camHeight / 2);
 	
 	// need something here....
-	//drawPointCloud();
+	drawPerspective();
 	
 	ofPopMatrix();
 	ofPopMatrix();
