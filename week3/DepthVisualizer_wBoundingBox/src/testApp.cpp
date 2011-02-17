@@ -80,36 +80,34 @@ void testApp::update() {
 	
 	
 	int width = depthImage.getWidth();
-    int height = depthImage.getHeight();
-    depthPixels = depthImage.getPixels();
-    bool needsSetting = true;
-    for(int y = 0; y < height; y++) {
-        for(int x = 0; x < width; x++) {
-            int i = y * width + x;
-            unsigned char curDepthValue = depthPixels[i];
-            if(curDepthValue != 0) {
-                float curPosition[] = {x, y, curDepthValue};
-                if(needsSetting) {
-                    for(int j = 0; j < 3; j++) {
-                        maxBound[j] = curPosition[j];
-                        minBound[j] = curPosition[j];
-                    }
-                    needsSetting = false;
-                } else {
-                    for(int j = 0; j < 3; j++) {
-                        if(curPosition[j] > maxBound[j]) {
-                            maxBound[j] = curPosition[j];
-                        }
-                        if(curPosition[j] < minBound[j]) {
-                            minBound[j] = curPosition[j];
-                        }
-                    }
-                }
-            }
-        }
-    }
-	
-	
+	int height = depthImage.getHeight();
+	depthPixels = depthImage.getPixels();
+	bool needsSetting = true;
+	for(int y = 0; y < height; y++) {
+		for(int x = 0; x < width; x++) {
+			int i = y * width + x;
+			unsigned char curDepthValue = depthPixels[i];
+			if(curDepthValue != 0) {
+				float curPosition[] = {x, y, curDepthValue};
+				if(needsSetting) {
+					for(int j = 0; j < 3; j++) {
+						maxBound[j] = curPosition[j];
+						minBound[j] = curPosition[j];
+					}
+					needsSetting = false;
+				} else {
+					for(int j = 0; j < 3; j++) {
+						if(curPosition[j] > maxBound[j]) {
+							maxBound[j] = curPosition[j];
+						}
+						if(curPosition[j] < minBound[j]) {
+							minBound[j] = curPosition[j];
+						}
+					}
+				}
+			}
+		}
+	}	
 	
 }
 
@@ -151,7 +149,9 @@ void testApp::draw() {
 		ofLine(minBound[0],minBound[1], minBound[2], minBound[0],maxBound[1], minBound[2]);
 		ofLine(minBound[0],minBound[1], minBound[2], minBound[0],minBound[1], maxBound[2]);
 		
-		
+		ofPoint farCorner(minBound[0], minBound[1], minBound[2]);
+		ofPoint nearCorner(maxBound[0], maxBound[1], maxBound[2]);
+		ofBox(farCorner, nearCorner);
 		
 		ofPopMatrix();
 		

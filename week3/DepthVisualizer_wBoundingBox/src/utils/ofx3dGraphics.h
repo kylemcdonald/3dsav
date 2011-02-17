@@ -14,6 +14,9 @@ void ofSphere(float x, float y, float radius);
 void ofSphere(const ofPoint& position, float radius);
 void ofSphere(float radius);
 
+
+void ofBox(const ofPoint& farCorner, const ofPoint& nearCorner);
+
 void ofBox(float x, float y, float z, float size);
 void ofBox(float x, float y, float size);
 void ofBox(const ofPoint& position, float size);
