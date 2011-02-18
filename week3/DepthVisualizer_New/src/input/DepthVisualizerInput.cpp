@@ -1,7 +1,13 @@
 #include "DepthVisualizerInput.h"
 #include "testApp.h"
 
-const int useKinect =true;
+const int useKinect =false;
+
+
+
+bool DepthVisualizerInput::usingKinect(){
+	return useKinect;
+}
 
 void DepthVisualizerInput::setup(ofxControlPanel& panel){
 	this->panel = &panel;
@@ -9,7 +15,6 @@ void DepthVisualizerInput::setup(ofxControlPanel& panel){
 	camWidth = 640;
 	camHeight = 480;
 	
-	rawDepth = new float [camWidth * camHeight]; //.resize(camWidth * camHeight);
 	depthImage.allocate(camWidth, camHeight);
 	
 	if(useKinect) {
@@ -17,18 +22,14 @@ void DepthVisualizerInput::setup(ofxControlPanel& panel){
 		kinect.init();
 		kinect.setVerbose(true);
 		kinect.open();
-		
 		// this is setting the raw data conversion range
 		// we assume that 100 to 300 CM (1 - 3 meters) is good for tracking a person in space
 		rawNearThreshold = 100;
 		rawFarThreshold = 300;
 		kinect.getCalibration().setClippingInCentimeters(rawNearThreshold, rawFarThreshold);
-		
 	} else {
-		
 		rawNearThreshold = 100;
 		rawFarThreshold = 300;
-		
 		animation.load("kinectScan");
 		cout << "Animation length is " << animation.size() << " frames." << endl;
 	}
@@ -43,7 +44,9 @@ void DepthVisualizerInput::update(){
 			depthImage.flagImageChanged();
 		}
 	} else {
-		int frame = ((int)(ofGetFrameNum() * 0.5)) % animation.size();
+		
+		float speed = panel->getValueF("playSpeed");
+		int frame = ((int)(ofGetFrameNum() * speed)) % animation.size();
 		cout << frame << endl;
 		ofImage& cur = animation.getAlpha(frame);
 
@@ -68,24 +71,7 @@ void DepthVisualizerInput::update(){
 		}
 	}
 	
-	// put distance values at a similar scale to the pixel units
-	float scale, trans;
-	if(useKinect) {
-		scale =  panel->getValueF("depthScale");
-		trans = -panel->getValueF("depthOffset");
-	} else {
-		scale =  panel->getValueF("depthScale");
-		trans = -panel->getValueF("depthOffset");
-	}
-	for(int y = 0; y < camHeight; y++) {
-		for(int x = 0; x < camWidth; x++) {
-			int i = y * camWidth + x;
-			rawDepth[i] = scale * (depthPixels[i] + trans);
-		}
-	}
-	
-	// only generate the point cloud for the kinect,
-	// since i don't know the parameters for the janus data	
+	// only generate the point cloud
 	if(useKinect) {
 		pointCloud.clear();
 		// this offset will center the data on the center of the scene
@@ -146,23 +132,7 @@ void DepthVisualizerInput::update(){
 }
 
 void DepthVisualizerInput::drawOrthographic() {
-	glEnable(GL_POINT_SMOOTH);
-	glPointSize(panel->getValueF("pointSize"));
-	
-	int step = panel->getValueI("stepSize");
-	bool drawZeroes = panel->getValueB("drawZeros");
-	
-	glBegin(GL_POINTS);
-	unsigned char* depthPixels = depthImage.getPixels();
-	for(int y = 0; y < camHeight; y += step) {
-		for(int x = 0; x < camWidth; x += step) {
-			int i = y * camWidth + x;
-			if(!(depthPixels[i] == 0 && !drawZeroes)) {
-				glVertex3f(x, y, rawDepth[i]);
-			}
-		}
-	}
-	glEnd();
+	;  // this needs to be done, from the depth image. 
 }
 
 void DepthVisualizerInput::drawPerspective() {
@@ -219,26 +189,26 @@ void DepthVisualizerInput::drawPerspective() {
 }
 
 void DepthVisualizerInput::drawDebug(){
-	ofPushMatrix();
-	// center everything
-	ofTranslate((ofGetWidth() - camWidth) / 2, 0, 0);
+	
+	//ofTranslate((ofGetWidth() - camWidth) / 2, 0, 0);
 	ofSetColor(255, 255, 255);
 	depthImage.draw(0, 0);
-	ofPushMatrix();
-	ofTranslate(0, camHeight);
-	ofTranslate(camWidth / 2, camHeight / 2);
-	ofRotateY(panel->getValueF("rotateY"));
-	if (panel->getValueB("autoRotate")){
-		ofRotateY(ofGetElapsedTimef()*5);
-	}
-	ofTranslate(-camWidth / 2, -camHeight / 2);
-	
-	// need something here....
-	drawPerspective();
-	
-	ofPopMatrix();
-	ofPopMatrix();
 
+	ofPushMatrix();
+		
+	ofTranslate(camWidth/2.0, ofGetHeight()*0.85, -500);
+		ofRotateY(panel->getValueF("rotateY"));
+		if (panel->getValueB("autoRotate")){
+			ofRotateY(ofGetElapsedTimef()*5);
+		}
+		ofScale(2,2,2);
+	
+		
+		// need something here....
+		drawPerspective();
+
+	ofPopMatrix();
+	
 }
 
 

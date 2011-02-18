@@ -35,6 +35,7 @@ public:
 	void drawOrthographic();
 	void drawPerspective();
 	
+	bool usingKinect();
 	void exit();
 
 };

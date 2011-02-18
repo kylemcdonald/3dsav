@@ -6,27 +6,27 @@ void testApp::setup() {
 	
 	input.setup(panel);  // < -- could pass in useKinnect here?
 	
-	panel.setup("Control Panel", 5, 5, 300, 600);
+	panel.setup("Control Panel", 1024-310, 5, 300, 600);
 	panel.addPanel("Threshold and Scale");
 	panel.addPanel("Control");
 	
 	panel.setWhichPanel("Threshold and Scale");
 	panel.addSlider("near threshold", "nearThreshold", 255, 0, 255, true);
 	panel.addSlider("far threshold", "farThreshold", 0, 0, 255, true);
-	panel.addSlider("depth scale", "depthScale", 5, 1, 20);
-	panel.addSlider("depth offset", "depthOffset", 128, 0, 255);
-	panel.addSlider("step size", "stepSize", 2, 1, 4, true);
 	panel.addSlider("point size", "pointSize", 1, 1, 10, true);
-	panel.addToggle("draw zeros", "drawZeros", false);
 	
 	panel.setWhichPanel("Control");
 	panel.addSlider("rotate y axis", "rotateY", 0, -360, 360, false);	
 	panel.addToggle("auto rotate", "autoRotate", false);
 	panel.addToggle("draw scene bounding frustrum", "drawSceneBox", false);
-	
 	panel.addToggle("draw debug", "drawDebug", false);
 	
-	panel.addToggle("record", "doRecording", false);
+	if (input.usingKinect() == false){
+		panel.addSlider("playback speed", "playSpeed", 0.5, -1, 1, false);
+	}
+	
+	
+	//panel.addToggle("record", "doRecording", false);
 	
 }
 
