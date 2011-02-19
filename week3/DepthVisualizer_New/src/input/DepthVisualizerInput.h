@@ -11,15 +11,12 @@ class DepthVisualizerInput {
 
 public: 
 	
-	// you can get three things from this class
+	// you can get two things from this class
 	
 	// 1) grayscale depth image
 	ofxCvGrayscaleImage depthImage;
 	
-	// 2) raw floating point image
-	float * rawDepth;
-	
-	// 3) point cloud of projected points
+	// 2) point cloud of projected points
 	vector<ofPoint> pointCloud;
 	
 	int camWidth, camHeight;

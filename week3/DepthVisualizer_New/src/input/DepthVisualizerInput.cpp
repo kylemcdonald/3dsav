@@ -1,9 +1,7 @@
 #include "DepthVisualizerInput.h"
 #include "testApp.h"
 
-const int useKinect =false;
-
-
+const int useKinect = false;
 
 bool DepthVisualizerInput::usingKinect(){
 	return useKinect;
@@ -36,7 +34,7 @@ void DepthVisualizerInput::setup(ofxControlPanel& panel){
 
 }
 
-void DepthVisualizerInput::update(){
+void DepthVisualizerInput::update(){	
 	if(useKinect) {
 		kinect.update();
 		if(kinect.isFrameNew()) {
@@ -88,14 +86,10 @@ void DepthVisualizerInput::update(){
 			}
 		}
 	} else {
-		
-		
-		
 		double fx_d = 1.0 / 5.9421434211923247e+02;
 		double fy_d = 1.0 / 5.9104053696870778e+02;
 		float cx_d = 3.3930780975300314e+02;
 		float cy_d = 2.4273913761751615e+02;
-		
 		
 		pointCloud.clear();
 		// this offset will center the data on the center of the scene
@@ -126,8 +120,6 @@ void DepthVisualizerInput::update(){
 				}
 			}
 		}
-		
-		
 	}
 }
 
@@ -139,13 +131,10 @@ void DepthVisualizerInput::drawPerspective() {
 	glEnable(GL_POINT_SMOOTH);
 	glPointSize(panel->getValueF("pointSize"));
 	
-	glBegin(GL_POINTS);
-	for(int i = 0; i < pointCloud.size(); i++) {
-		ofPoint cur = pointCloud[i];
-		glVertex3f(cur.x, cur.y, cur.z);
-	}
-	glEnd();
-	
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, sizeof(ofPoint), &(pointCloud[0][0]));
+	glDrawArrays(GL_POINTS, 0, pointCloud.size());
+	glDisableClientState(GL_VERTEX_ARRAY);
 	
 	ofSetColor(255,255,255,80);
 	
