@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxDirList.h"
 
 class scanDataPlayer {
 public:
@@ -23,9 +24,13 @@ public:
 	ofImage& get(int frameNumber);
 	ofImage& getAlpha(int frameNumber);
 	
-private:
+protected:
+	void checkLoaded(int frameNumber);
+
 	vector<ofImage*> images;
 	vector<ofImage*> alpha;
+	
+	ofxDirList dir;
 	
 	float framerate;
 	int lastPosition;
