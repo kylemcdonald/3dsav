@@ -34,24 +34,37 @@ void DepthVisualizerInput::setup(ofxControlPanel& panel){
 
 }
 
-void DepthVisualizerInput::update(){	
+bool DepthVisualizerInput::update(){
+	bool isFrameNew = false;
+
 	if(useKinect) {
 		kinect.update();
 		if(kinect.isFrameNew()) {
+			isFrameNew = true;
 			depthImage.setFromPixels(kinect.getDepthPixels(), camWidth, camHeight);
 			depthImage.flagImageChanged();
 		}
 	} else {
 		
-		float speed = panel->getValueF("playSpeed");
-		int frame = ((int)(ofGetFrameNum() * speed)) % animation.size();
-		cout << frame << endl;
-		ofImage& cur = animation.getAlpha(frame);
-
-		depthImage.setFromPixels(cur.getPixels(), cur.getWidth(), cur.getHeight());
-		depthImage.flagImageChanged();
+		animation.setPlaySpeed(panel->getValueF("playSpeed"));
+		
+		if(animation.isFrameNew()) {
+			isFrameNew = true;
+			ofImage& cur = animation.getAlpha();
+			depthImage.setFromPixels(cur.getPixels(), cur.getWidth(), cur.getHeight());
+			depthImage.flagImageChanged();
+		}
 	}
 	
+	if(isFrameNew) {
+		thresholdDepthImage();
+		buildPointCloud();
+	}
+	
+	return isFrameNew;
+}
+
+void DepthVisualizerInput::thresholdDepthImage() {
 	// do processing here on depthImage
 	// getting rid of (setting depth = 0) on pixels we don't care about
 	// for example, background, etc. 
@@ -68,8 +81,12 @@ void DepthVisualizerInput::update(){
 			}
 		}
 	}
+}
+
+void DepthVisualizerInput::buildPointCloud() {	
+	unsigned char* depthPixels = depthImage.getPixels();
 	
-	// only generate the point cloud
+	// generate the point cloud
 	if(useKinect) {
 		pointCloud.clear();
 		// this offset will center the data on the center of the scene

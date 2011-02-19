@@ -33,35 +33,36 @@ void testApp::setup() {
 //--------------------------------------------------------------
 void testApp::update() {
 	
-	input.update();
+	bool isFrameNew = input.update();
 	
-	centroid.set(0,0,0);
-	int nPixels = 0;
-	
-	int width = input.depthImage.getWidth();
-	int height = input.depthImage.getHeight();
-	
-	vector<ofPoint>& pointCloud = input.pointCloud;
-	bool needsSetting = true;
-	for(int i = 0; i < pointCloud.size(); i++) {
-		ofPoint cur = pointCloud[i];
+	if(isFrameNew) {
+		centroid.set(0,0,0);
+		int nPixels = 0;
 		
-		if(needsSetting) {
-			maxBound = cur;
-			minBound = cur;
-			needsSetting = false;
-		} else {
-			maxBound = max(maxBound, cur);
-			minBound = min(minBound, cur);
+		int width = input.depthImage.getWidth();
+		int height = input.depthImage.getHeight();
+		
+		vector<ofPoint>& pointCloud = input.pointCloud;
+		bool needsSetting = true;
+		for(int i = 0; i < pointCloud.size(); i++) {
+			ofPoint cur = pointCloud[i];
+			
+			if(needsSetting) {
+				maxBound = cur;
+				minBound = cur;
+				needsSetting = false;
+			} else {
+				maxBound = max(maxBound, cur);
+				minBound = min(minBound, cur);
+			}
+			
+			centroid += cur;
 		}
 		
-		centroid += cur;
+		if(pointCloud.size() > 0) {
+			centroid /= pointCloud.size();
+		}
 	}
-	
-	if(pointCloud.size() > 0) {
-		centroid /= pointCloud.size();
-	}
-	
 }
 
 //--------------------------------------------------------------

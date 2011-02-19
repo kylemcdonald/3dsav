@@ -4,6 +4,12 @@
 #include "ofxOpenCv.h"
 
 void scanDataPlayer::load(string scanDirectory) {
+	setPlaySpeed(1);
+	lastPosition = 0;
+	framerate = 30;
+	frame = 0;
+	lastTime = ofGetElapsedTimef();
+	
 	ofxDirList dir;
 	int n = dir.listDir(scanDirectory);
 	for(int i = 0; i < n; i++) {
@@ -25,6 +31,40 @@ void scanDataPlayer::load(string scanDirectory) {
 		curAlpha->update();		
 		alpha.push_back(curAlpha);
 	}
+}
+
+void scanDataPlayer::setPlaySpeed(float playSpeed) {
+	this->playSpeed = playSpeed;
+}
+
+bool scanDataPlayer::isFrameNew() {
+	float curTime = ofGetElapsedTimef();
+	float timeDiff = curTime - lastTime;
+	frame += timeDiff * playSpeed * framerate;
+	lastTime = curTime;
+	
+	// this can be done without a while loop ;)
+	while(frame < 0) {
+		frame += size();
+	}
+	frame = fmodf(frame, size());
+	int curPosition = (int) frame;
+	bool newFrame = (curPosition != lastPosition);
+	lastPosition = curPosition;
+	
+	return newFrame;
+}
+
+int scanDataPlayer::getFrameNumber() {
+	return lastPosition;
+}
+
+ofImage& scanDataPlayer::get() {
+	return get(lastPosition);
+}
+
+ofImage& scanDataPlayer::getAlpha() {
+	return getAlpha(lastPosition);
 }
 
 void scanDataPlayer::unload() {
