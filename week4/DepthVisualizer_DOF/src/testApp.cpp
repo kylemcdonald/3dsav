@@ -11,16 +11,17 @@ void testApp::setup() {
 	panel.addPanel("Threshold and Scale");
 	panel.addSlider("near threshold", "nearThreshold", 255, 0, 255, true);
 	panel.addSlider("far threshold", "farThreshold", 0, 0, 255, true);
-	panel.addSlider("point size", "pointSize", 1, 1, 10, true);
 	
 	panel.addPanel("Control");
+	panel.addSlider("scale", "scale", 7, 1, 20);	
 	panel.addSlider("rotate y axis", "rotateY", 0, -360, 360, false);	
 	panel.addToggle("auto rotate", "autoRotate", false);
-	panel.addToggle("draw scene bounding frustrum", "drawSceneBox", false);
 	panel.addToggle("draw debug", "drawDebug", false);
 	
 	if (input.usingKinect() == false){
 		panel.addSlider("playback speed", "playSpeed", 0.5, -1, 1, false);
+	} else {
+		panel.addToggle("draw scene bounding frustrum", "drawSceneBox", false);
 	}
 	
 	panel.addPanel("DOF");
@@ -38,37 +39,7 @@ void testApp::setup() {
 
 //--------------------------------------------------------------
 void testApp::update() {
-	
-	bool isFrameNew = input.update();
-	
-	if(isFrameNew) {
-		centroid.set(0,0,0);
-		int nPixels = 0;
-		
-		int width = input.depthImage.getWidth();
-		int height = input.depthImage.getHeight();
-		
-		vector<ofPoint>& pointCloud = input.pointCloud;
-		bool needsSetting = true;
-		for(int i = 0; i < pointCloud.size(); i++) {
-			ofPoint cur = pointCloud[i];
-			
-			if(needsSetting) {
-				maxBound = cur;
-				minBound = cur;
-				needsSetting = false;
-			} else {
-				maxBound = max(maxBound, cur);
-				minBound = min(minBound, cur);
-			}
-			
-			centroid += cur;
-		}
-		
-		if(pointCloud.size() > 0) {
-			centroid /= pointCloud.size();
-		}
-	}
+	input.update();
 }
 
 //--------------------------------------------------------------
@@ -92,7 +63,8 @@ void testApp::draw() {
 				ofRotateY(ofGetElapsedTimef()*5);
 			}
 			
-			ofScale(3,3,3); // zoom in so 1 cm = 3 pixels
+			float scale = panel.getValueF("scale");
+			ofScale(scale, scale, scale);
 			
 			glDisable(GL_DEPTH_TEST);
 			glEnable(GL_BLEND);
@@ -116,36 +88,9 @@ void testApp::draw() {
 			input.drawPerspective();
 			dofShader.end();
 			
-			// draw anything else: 
-			
-			if (input.pointCloud.size() > 0){
-				ofBox(centroid.x, centroid.y, centroid.z, 10);
-				ofBox(minBound, maxBound);
-			}
-		
 		ofPopMatrix();
 		
 	}
-	
-	/*
-	if (panel.getValueB("doRecording")){
-		static int counter= 0;
-		
-		ofImage temp;
-		temp.allocate(640,480, OF_IMAGE_COLOR_ALPHA);
-		unsigned char * colorAlphaPix = temp.getPixels();
-		unsigned char * pix = input.depthImage.getPixels();
-		for(int i = 0; i < 640*480; i++){
-			colorAlphaPix[i*4] = pix[i];
-			colorAlphaPix[i*4+1] = pix[i];
-			colorAlphaPix[i*4+2] = pix[i];
-			colorAlphaPix[i*4+3] = pix[i];
-		}
-		counter++;
-	
-		temp.saveImage("output_" + ofToString(counter) + ".png");
-	}
-	*/
 	
 }
 

@@ -145,9 +145,6 @@ void DepthVisualizerInput::drawOrthographic() {
 }
 
 void DepthVisualizerInput::drawPerspective() {
-	glEnable(GL_POINT_SMOOTH);
-	glPointSize(panel->getValueF("pointSize"));
-	
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(ofPoint), &(pointCloud[0][0]));
 	glDrawArrays(GL_POINTS, 0, pointCloud.size());

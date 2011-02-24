@@ -23,9 +23,6 @@ class testApp : public ofBaseApp {
 		void windowResized(int w, int h);
 
 		ofxAutoControlPanel panel;
-
-		ofPoint minBound, maxBound;
-		ofPoint centroid;
 	
 		DepthVisualizerInput input;
 	
