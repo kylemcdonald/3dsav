@@ -1,5 +1,7 @@
 uniform float focusDistance;
 uniform float aperture;
+uniform float pointBrightness;
+uniform float rgbBrightness;
 uniform float lineWidth;
 uniform float aspectRatio;
 
@@ -23,6 +25,8 @@ void main() {
 	// divide the color alpha by the area
 	gl_FrontColor = gl_Color;
   gl_FrontColor.a /= (diameter / lineWidth);
+	gl_FrontColor.a *= pointBrightness;
+	gl_FrontColor.rgb *= rgbBrightness;
 	
 	vec4 offset = vec4(side * normal * diameter, 0, 0);
 	offset.y *= aspectRatio;

@@ -27,6 +27,10 @@
 		27C5F7E3130397B000475346 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F7DC130397B000475346 /* tinyxmlerror.cpp */; };
 		27C5F7E4130397B000475346 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F7DD130397B000475346 /* tinyxmlparser.cpp */; };
 		27C5F7E5130397B000475346 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F7DF130397B000475346 /* ofxXmlSettings.cpp */; };
+		27C61667131647190068EAE5 /* DOFCloud.frag in Sources */ = {isa = PBXBuildFile; fileRef = 27C61663131647190068EAE5 /* DOFCloud.frag */; };
+		27C61668131647190068EAE5 /* DOFCloud.vert in Sources */ = {isa = PBXBuildFile; fileRef = 27C61664131647190068EAE5 /* DOFCloud.vert */; };
+		27C61669131647190068EAE5 /* DOFLine.frag in Sources */ = {isa = PBXBuildFile; fileRef = 27C61665131647190068EAE5 /* DOFLine.frag */; };
+		27C6166A131647190068EAE5 /* DOFLine.vert in Sources */ = {isa = PBXBuildFile; fileRef = 27C61666131647190068EAE5 /* DOFLine.vert */; };
 		92D8EF47130CB14500670435 /* scanDataPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D8EF04130CB14500670435 /* scanDataPlayer.cpp */; };
 		92D8EF48130CB14500670435 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D8EF06130CB14500670435 /* main.cpp */; };
 		92D8EF49130CB14500670435 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D8EF07130CB14500670435 /* testApp.cpp */; };
@@ -188,6 +192,10 @@
 		27C5F7DD130397B000475346 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 		27C5F7DF130397B000475346 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxXmlSettings.cpp; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp; sourceTree = SOURCE_ROOT; };
 		27C5F7E0130397B000475346 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxXmlSettings.h; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
+		27C61663131647190068EAE5 /* DOFCloud.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = DOFCloud.frag; path = bin/data/shaders/DOFCloud.frag; sourceTree = SOURCE_ROOT; };
+		27C61664131647190068EAE5 /* DOFCloud.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = DOFCloud.vert; path = bin/data/shaders/DOFCloud.vert; sourceTree = SOURCE_ROOT; };
+		27C61665131647190068EAE5 /* DOFLine.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = DOFLine.frag; path = bin/data/shaders/DOFLine.frag; sourceTree = SOURCE_ROOT; };
+		27C61666131647190068EAE5 /* DOFLine.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = DOFLine.vert; path = bin/data/shaders/DOFLine.vert; sourceTree = SOURCE_ROOT; };
 		92D8EF04130CB14500670435 /* scanDataPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scanDataPlayer.cpp; sourceTree = "<group>"; };
 		92D8EF05130CB14500670435 /* scanDataPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scanDataPlayer.h; sourceTree = "<group>"; };
 		92D8EF06130CB14500670435 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -995,6 +1003,10 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				27C61663131647190068EAE5 /* DOFCloud.frag */,
+				27C61664131647190068EAE5 /* DOFCloud.vert */,
+				27C61665131647190068EAE5 /* DOFLine.frag */,
+				27C61666131647190068EAE5 /* DOFLine.vert */,
 				92D8EF03130CB14500670435 /* input */,
 				92D8EF09130CB14500670435 /* utils */,
 				92D8EF06130CB14500670435 /* main.cpp */,
@@ -1219,6 +1231,10 @@
 				92D8F0F0130CCEA200670435 /* DepthVisualizerInput.cpp in Sources */,
 				2729D4AC1315DB2400A5430C /* ofShader.cpp in Sources */,
 				2729D4BE1315E2E400A5430C /* ofFileUtils.cpp in Sources */,
+				27C61667131647190068EAE5 /* DOFCloud.frag in Sources */,
+				27C61668131647190068EAE5 /* DOFCloud.vert in Sources */,
+				27C61669131647190068EAE5 /* DOFLine.frag in Sources */,
+				27C6166A131647190068EAE5 /* DOFLine.vert in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

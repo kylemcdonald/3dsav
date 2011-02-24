@@ -11,13 +11,17 @@ class DepthVisualizerInput {
 	
 public: 
 	
-	// you can get two things from this class
+	// you can get three things from this class
 	
 	// 1) grayscale depth image
 	ofxCvGrayscaleImage depthImage;
 	
-	// 2) point cloud of projected points'
+	// 2) point cloud of projected points
 	vector<ofxVec3f> pointCloud;
+	
+	// 3) same as above, but structured as a grid
+	//    empty points are (0,0,0)
+	ofxVec3f pointGrid[480][640];
 	
 	int camWidth, camHeight;
 	float rawFarThreshold, rawNearThreshold;

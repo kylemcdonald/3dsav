@@ -31,7 +31,13 @@ void DepthVisualizerInput::setup(ofxControlPanel& panel){
 		animation.load("kinectScan");
 		cout << "Animation length is " << animation.size() << " frames." << endl;
 	}
-
+	
+	// set everything in the grid to NULL to start
+	for(int y = 0; y < camHeight; y++) {
+		for(int x = 0; x < camWidth; x++) {
+			pointGrid[y][x] = NULL;
+		}
+	}
 }
 
 bool DepthVisualizerInput::update(){
@@ -46,7 +52,11 @@ bool DepthVisualizerInput::update(){
 		}
 	} else {
 		
-		animation.setPlaySpeed(panel->getValueF("playSpeed"));
+		if(panel->getValueB("playbackPause")) {
+			animation.setPlaySpeed(0);
+		} else {
+			animation.setPlaySpeed(panel->getValueF("playSpeed"));
+		}
 		
 		if(animation.isFrameNew()) {
 			isFrameNew = true;
@@ -99,6 +109,10 @@ void DepthVisualizerInput::buildPointCloud() {
 					cur *= 100; // convert from meters to cm
 					cur.z += offset;
 					pointCloud.push_back(cur);
+					
+					pointGrid[y][x].set(cur);
+				} else {
+					pointGrid[y][x].set(0, 0, 0);
 				}
 			}
 		}
@@ -118,7 +132,6 @@ void DepthVisualizerInput::buildPointCloud() {
 					// ok where are we: 
 					float pct = depthPixels[i] / 255.0;
 					
-					
 					float zval = rawNearThreshold + (1-pct) * (rawFarThreshold - rawNearThreshold);
 					
 					float z = zval / 100.0f;
@@ -131,6 +144,10 @@ void DepthVisualizerInput::buildPointCloud() {
 					cur *= 100; // convert from meters to cm
 					cur.z += offset;
 					pointCloud.push_back(cur);
+					
+					pointGrid[y][x].set(cur);
+				} else {
+					pointGrid[y][x].set(0, 0, 0);
 				}
 			}
 		}
