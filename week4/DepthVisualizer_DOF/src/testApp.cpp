@@ -32,8 +32,8 @@ void testApp::setup() {
 	panel.addSlider("pointBrightness", "pointBrightness", .8, 0, 1);
 	panel.addSlider("rgbBrightness", "rgbBrightness", 3, 0, 10);
 	panel.addSlider("maxPointSize", "maxPointSize", 20, 5, 40);
-	panel.addSlider("maxLineLength", "maxLineLength", 500, 0, 500);
-	panel.addSlider("maxLines", "maxLines", 10000, 0, 50000);
+	panel.addSlider("maxLineLength", "maxLineLength", 50, 0, 500);
+	panel.addSlider("maxLines", "maxLines", 20000, 0, 100000);
 	
 	//panel.addToggle("record", "doRecording", false);
 	
