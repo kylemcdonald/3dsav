@@ -18,14 +18,16 @@ void testApp::setup() {
 	panel.addToggle("auto rotate", "autoRotate", false);
 	panel.addToggle("draw debug", "drawDebug", false);
 	
+	panel.addToggle("draw scene bounding frustrum", "drawSceneBox", false);
+		
 	if (input.usingKinect() == false){
 		panel.addSlider("playback speed", "playSpeed", 0.5, -1, 1, false);
-	} else {
-		panel.addToggle("draw scene bounding frustrum", "drawSceneBox", false);
 	}
 	
-	panel.addPanel("DOF Points");
-	panel.addSlider("focusDistance", "focusDistance", 1000, 0, 1600);
+	panel.addPanel("DOF");
+	panel.addToggle("usePoints", "usePoints", true);
+	
+	panel.addSlider("focusDistance", "focusDistance", 1300, 0, 1600);
 	panel.addSlider("aperture", "aperture", 0.06, 0.001, 0.2);
 	panel.addSlider("pointBrightness", "pointBrightness", .8, 0, 1);
 	panel.addSlider("rgbBrightness", "rgbBrightness", 3, 0, 10);
@@ -34,7 +36,7 @@ void testApp::setup() {
 	//panel.addToggle("record", "doRecording", false);
 	
 	dofPoints.setup("shaders/DOFCloud");
-	dofPoints.setup("shaders/DOFLine");
+	dofLines.setup("shaders/DOFLine");
 	
 }
 
@@ -78,16 +80,28 @@ void testApp::draw() {
 			glEnable(GL_POINT_SMOOTH);
 			glEnable(GL_VERTEX_PROGRAM_POINT_SIZE_ARB);
 
-			dofPoints.begin();
-			
-			dofPoints.setUniform1f("focusDistance", panel.getValueF("focusDistance"));
-			dofPoints.setUniform1f("aperture", panel.getValueF("aperture"));
-			dofPoints.setUniform1f("pointBrightness", panel.getValueF("pointBrightness"));
-			dofPoints.setUniform1f("rgbBrightness", panel.getValueF("rgbBrightness"));
-			dofPoints.setUniform1f("maxPointSize", panel.getValueF("maxPointSize"));
+			if(panel.getValueB("usePoints")) {
+				dofPoints.begin();
+				
+				dofPoints.setUniform1f("focusDistance", panel.getValueF("focusDistance"));
+				dofPoints.setUniform1f("aperture", panel.getValueF("aperture"));
+				dofPoints.setUniform1f("pointBrightness", panel.getValueF("pointBrightness"));
+				dofPoints.setUniform1f("rgbBrightness", panel.getValueF("rgbBrightness"));
+				dofPoints.setUniform1f("maxPointSize", panel.getValueF("maxPointSize"));
 
-			input.drawPerspective();
-			dofPoints.end();
+				input.drawPerspective();
+				
+				dofPoints.end();
+			} else {
+				dofLines.begin();
+							
+				dofLines.setUniform1f("aspectRatio", ofGetWidth() / ofGetHeight());
+				dofLines.setUniform1f("lineWidth", 1);
+				dofLines.setUniform1f("focusDistance", panel.getValueF("focusDistance"));
+				dofLines.setUniform1f("aperture", panel.getValueF("aperture"));
+				
+				dofLines.end();
+			}
 			
 		ofPopMatrix();
 		
