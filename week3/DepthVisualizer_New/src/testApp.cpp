@@ -24,6 +24,8 @@ void testApp::setup() {
 	if (input.usingKinect() == false){
 		panel.addSlider("playback speed", "playSpeed", 0.5, -1, 1, false);
 	}
+  
+  fullAppBuffer.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR);
 	
 	
 	//panel.addToggle("record", "doRecording", false);
@@ -32,6 +34,9 @@ void testApp::setup() {
 
 //--------------------------------------------------------------
 void testApp::update() {
+  if (bRecording == true){
+		saver.addFrame(fullAppBuffer.getPixels(), 1.0f / 30.0f); 
+  }
 	
 	bool isFrameNew = input.update();
 	
@@ -120,6 +125,10 @@ void testApp::draw() {
 		temp.saveImage("output_" + ofToString(counter) + ".png");
 	}
 	*/
+  
+  if(bRecording == true){
+    fullAppBuffer.grabScreen(0, 0, ofGetWidth(), ofGetHeight());
+  }
 	
 }
 
@@ -131,6 +140,15 @@ void testApp::exit() {
 void testApp::keyPressed (int key) {
 	if(key == 'f') {
 		ofToggleFullscreen();
+	}
+  
+  if (key == 'a'){
+		saver.setup(ofGetWidth(),ofGetHeight(),"depth_visualizer.mov");
+	} else if (key == 's'){
+		saver.finishMovie();
+		bRecording = false;
+	} else if (key == 'r'){
+		bRecording = !bRecording;
 	}
 }
 

@@ -1,7 +1,7 @@
 #include "DepthVisualizerInput.h"
 #include "testApp.h"
 
-const int useKinect = false;
+const int useKinect = true;
 
 bool DepthVisualizerInput::usingKinect(){
 	return useKinect;

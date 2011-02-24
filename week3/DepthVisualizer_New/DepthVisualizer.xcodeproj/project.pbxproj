@@ -25,6 +25,7 @@
 		27C5F7E3130397B000475346 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F7DC130397B000475346 /* tinyxmlerror.cpp */; };
 		27C5F7E4130397B000475346 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F7DD130397B000475346 /* tinyxmlparser.cpp */; };
 		27C5F7E5130397B000475346 /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F7DF130397B000475346 /* ofxXmlSettings.cpp */; };
+		37BE8635131694B400A2D3A2 /* ofxQTVideoSaver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37BE8633131694B400A2D3A2 /* ofxQTVideoSaver.cpp */; };
 		92D8EF47130CB14500670435 /* scanDataPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D8EF04130CB14500670435 /* scanDataPlayer.cpp */; };
 		92D8EF48130CB14500670435 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D8EF06130CB14500670435 /* main.cpp */; };
 		92D8EF49130CB14500670435 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92D8EF07130CB14500670435 /* testApp.cpp */; };
@@ -182,6 +183,8 @@
 		27C5F7DD130397B000475346 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = ../../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 		27C5F7DF130397B000475346 /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxXmlSettings.cpp; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.cpp; sourceTree = SOURCE_ROOT; };
 		27C5F7E0130397B000475346 /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxXmlSettings.h; path = ../../../addons/ofxXmlSettings/src/ofxXmlSettings.h; sourceTree = SOURCE_ROOT; };
+		37BE8633131694B400A2D3A2 /* ofxQTVideoSaver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxQTVideoSaver.cpp; sourceTree = "<group>"; };
+		37BE8634131694B400A2D3A2 /* ofxQTVideoSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxQTVideoSaver.h; sourceTree = "<group>"; };
 		92D8EF04130CB14500670435 /* scanDataPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scanDataPlayer.cpp; sourceTree = "<group>"; };
 		92D8EF05130CB14500670435 /* scanDataPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scanDataPlayer.h; sourceTree = "<group>"; };
 		92D8EF06130CB14500670435 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -303,7 +306,7 @@
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		E49DA7BD10CD396F0006B5A8 /* freeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = freeimage.a; path = ../../../libs/FreeImage/lib/osx/freeimage.a; sourceTree = SOURCE_ROOT; };
-		E4B69B5B0A3A1756003C02F2 /* DepthVisualizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DepthVisualizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* DepthVisualizerDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DepthVisualizerDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4C2421610CC549C004149E2 /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E4C2424410CC5A17004149E2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -581,6 +584,15 @@
 			path = ../../../addons/ofxXmlSettings/src;
 			sourceTree = SOURCE_ROOT;
 		};
+		37BE8632131694B400A2D3A2 /* ofxQTVideoSaver */ = {
+			isa = PBXGroup;
+			children = (
+				37BE8633131694B400A2D3A2 /* ofxQTVideoSaver.cpp */,
+				37BE8634131694B400A2D3A2 /* ofxQTVideoSaver.h */,
+			);
+			path = ofxQTVideoSaver;
+			sourceTree = "<group>";
+		};
 		92D8EF03130CB14500670435 /* input */ = {
 			isa = PBXGroup;
 			children = (
@@ -679,6 +691,7 @@
 		E44665C70F5B3E03005D0BF0 /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				37BE8632131694B400A2D3A2 /* ofxQTVideoSaver */,
 				27C5F7D0130397B000475346 /* ofxDirList */,
 				27C5F7D7130397B000475346 /* ofxXmlSettings */,
 				27C5F77A1303976100475346 /* ofxKinect */,
@@ -973,7 +986,7 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
-				E4B69B5B0A3A1756003C02F2 /* DepthVisualizer.app */,
+				E4B69B5B0A3A1756003C02F2 /* DepthVisualizerDebug.app */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,
 				E4C2422310CC54B6004149E2 /* openFrameworks */,
@@ -1088,7 +1101,7 @@
 			);
 			name = DepthVisualizer;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* DepthVisualizer.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* DepthVisualizerDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1207,6 +1220,7 @@
 				92D8EF64130CB14500670435 /* simpleLogger.cpp in Sources */,
 				92D8EFAC130CB89E00670435 /* ofx3dGraphics.cpp in Sources */,
 				92D8F0F0130CCEA200670435 /* DepthVisualizerInput.cpp in Sources */,
+				37BE8635131694B400A2D3A2 /* ofxQTVideoSaver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

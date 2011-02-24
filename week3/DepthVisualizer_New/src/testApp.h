@@ -4,6 +4,7 @@
 
 #include "ofxAutoControlPanel.h"
 #include "DepthVisualizerInput.h"
+#include "ofxQTVideoSaver.h"
 
 class testApp : public ofBaseApp {
 	
@@ -27,5 +28,10 @@ class testApp : public ofBaseApp {
 		ofPoint centroid;
 	
 		DepthVisualizerInput input;
+  
+    ofImage fullAppBuffer;
+    ofxQtVideoSaver		saver;
+    bool bRecording;
+
 	
 };
