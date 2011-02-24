@@ -32,6 +32,8 @@ void testApp::setup() {
 	panel.addSlider("pointBrightness", "pointBrightness", .8, 0, 1);
 	panel.addSlider("rgbBrightness", "rgbBrightness", 3, 0, 10);
 	panel.addSlider("maxPointSize", "maxPointSize", 20, 5, 40);
+	panel.addSlider("maxLineLength", "maxLineLength", 500, 0, 500);
+	panel.addSlider("maxLines", "maxLines", 10000, 0, 50000);
 	
 	//panel.addToggle("record", "doRecording", false);
 	
@@ -99,6 +101,50 @@ void testApp::draw() {
 				dofLines.setUniform1f("lineWidth", 1);
 				dofLines.setUniform1f("focusDistance", panel.getValueF("focusDistance"));
 				dofLines.setUniform1f("aperture", panel.getValueF("aperture"));
+				
+				GLint sideLocation = dofLines.getAttributeLocation("side");
+				GLint nextLocation = dofLines.getAttributeLocation("next");
+				
+				vector<ofxVec3f>& points = input.pointCloud;
+				
+				float maxLineLength = panel.getValueF("maxLineLength");
+				float maxLines = panel.getValueF("maxLines");
+				
+				ofSeedRandom(0); // same random numbers every frame
+				
+				int n = points.size();
+				for(int i = 0; i < maxLines; i++) {
+				
+					ofxVec3f& cur = points[(int) ofRandom(0, n)];
+					ofxVec3f& next = points[(int) ofRandom(0, n)];
+				
+					float lineLength = cur.distance(next);
+					
+					glBegin(GL_TRIANGLE_STRIP);
+					if(lineLength < maxLineLength) {
+						// place two vertices to represent the top and bottom
+						// of the beginning of the line
+						dofLines.setAttribute1f(sideLocation, -.5);
+						dofLines.setAttribute3f(nextLocation, next.x, next.y, next.z);
+						glVertex3f(cur.x, cur.y, cur.z); // top vertex
+						dofLines.setAttribute1f(sideLocation, +.5);
+						dofLines.setAttribute3f(nextLocation, next.x, next.y, next.z);
+						glVertex3f(cur.x, cur.y, cur.z); // bottom vertex
+						
+						// extrapolate where the line would go next
+						ofxVec3f after = next + (next - cur);
+						
+						// place two vertices to represent the top and bottom
+						// of the end of the line
+						dofLines.setAttribute1f(sideLocation, -.5);
+						dofLines.setAttribute3f(nextLocation, after.x, after.y, after.z);
+						glVertex3f(next.x, next.y, next.z); // top vertex
+						dofLines.setAttribute1f(sideLocation, +.5);
+						dofLines.setAttribute3f(nextLocation, after.x, after.y, after.z);
+						glVertex3f(next.x, next.y, next.z); // bottom vertex
+					}
+					glEnd();
+				}
 				
 				dofLines.end();
 			}

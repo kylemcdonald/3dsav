@@ -17,7 +17,7 @@ public:
 	ofxCvGrayscaleImage depthImage;
 	
 	// 2) point cloud of projected points'
-	vector<ofPoint> pointCloud;
+	vector<ofxVec3f> pointCloud;
 	
 	int camWidth, camHeight;
 	float rawFarThreshold, rawNearThreshold;

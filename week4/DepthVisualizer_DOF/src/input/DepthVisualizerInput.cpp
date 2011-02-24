@@ -98,7 +98,7 @@ void DepthVisualizerInput::buildPointCloud() {
 					ofxVec3f cur = kinect.getWorldCoordinateFor(x, y);
 					cur *= 100; // convert from meters to cm
 					cur.z += offset;
-					pointCloud.push_back(ofPoint(cur));
+					pointCloud.push_back(cur);
 				}
 			}
 		}
@@ -122,18 +122,15 @@ void DepthVisualizerInput::buildPointCloud() {
 					float zval = rawNearThreshold + (1-pct) * (rawFarThreshold - rawNearThreshold);
 					
 					float z = zval / 100.0f;
-					ofPoint result;
-					result.x = float((x - cx_d) * z * fx_d);
-					result.y = float((y - cy_d) * z * fy_d);
-					result.z = z;
-					
-					
 					ofxVec3f cur;
-					cur.set(result.x, result.y, result.z);
+					cur.x = float((x - cx_d) * z * fx_d);
+					cur.y = float((y - cy_d) * z * fy_d);
+					cur.z = z;
+					
 					//ofxVec3f cur = kinect.getWorldCoordinateFor((float)x, (float)y, zval/100.0f);
 					cur *= 100; // convert from meters to cm
 					cur.z += offset;
-					pointCloud.push_back(ofPoint(cur));
+					pointCloud.push_back(cur);
 				}
 			}
 		}
@@ -146,7 +143,7 @@ void DepthVisualizerInput::drawOrthographic() {
 
 void DepthVisualizerInput::drawPerspective() {
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, sizeof(ofPoint), &(pointCloud[0][0]));
+	glVertexPointer(3, GL_FLOAT, sizeof(ofxVec3f), &(pointCloud[0][0]));
 	glDrawArrays(GL_POINTS, 0, pointCloud.size());
 	glDisableClientState(GL_VERTEX_ARRAY);
 	
