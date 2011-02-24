@@ -24,7 +24,7 @@ void testApp::setup() {
 		panel.addToggle("draw scene bounding frustrum", "drawSceneBox", false);
 	}
 	
-	panel.addPanel("DOF");
+	panel.addPanel("DOF Points");
 	panel.addSlider("focusDistance", "focusDistance", 1000, 0, 1600);
 	panel.addSlider("aperture", "aperture", 0.06, 0.001, 0.2);
 	panel.addSlider("pointBrightness", "pointBrightness", .8, 0, 1);
@@ -33,7 +33,8 @@ void testApp::setup() {
 	
 	//panel.addToggle("record", "doRecording", false);
 	
-	dofShader.setup("shaders/DOFCloud");
+	dofPoints.setup("shaders/DOFCloud");
+	dofPoints.setup("shaders/DOFLine");
 	
 }
 
@@ -77,16 +78,16 @@ void testApp::draw() {
 			glEnable(GL_POINT_SMOOTH);
 			glEnable(GL_VERTEX_PROGRAM_POINT_SIZE_ARB);
 
-			dofShader.begin();
+			dofPoints.begin();
 			
-			dofShader.setUniform1f("focusDistance", panel.getValueF("focusDistance"));
-			dofShader.setUniform1f("aperture", panel.getValueF("aperture"));
-			dofShader.setUniform1f("pointBrightness", panel.getValueF("pointBrightness"));
-			dofShader.setUniform1f("rgbBrightness", panel.getValueF("rgbBrightness"));
-			dofShader.setUniform1f("maxPointSize", panel.getValueF("maxPointSize"));
+			dofPoints.setUniform1f("focusDistance", panel.getValueF("focusDistance"));
+			dofPoints.setUniform1f("aperture", panel.getValueF("aperture"));
+			dofPoints.setUniform1f("pointBrightness", panel.getValueF("pointBrightness"));
+			dofPoints.setUniform1f("rgbBrightness", panel.getValueF("rgbBrightness"));
+			dofPoints.setUniform1f("maxPointSize", panel.getValueF("maxPointSize"));
 
 			input.drawPerspective();
-			dofShader.end();
+			dofPoints.end();
 			
 		ofPopMatrix();
 		

@@ -26,5 +26,5 @@ class testApp : public ofBaseApp {
 	
 		DepthVisualizerInput input;
 	
-		ofShader dofShader;
+		ofShader dofPoints, dofLines;
 };
