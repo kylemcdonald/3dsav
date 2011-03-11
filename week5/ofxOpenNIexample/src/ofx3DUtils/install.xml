@@ -1,0 +1,40 @@
+<install>
+	
+	<version></version>
+	<author></author>
+	<url></url>
+	
+	<requires>
+		<addon>ofxVectorMath</addon>
+	</requires>
+	
+	<add>
+		
+		<!-- 	=====================================================================	-->
+		<!--	========================== add per project using this addon =========	-->
+		<!-- 	=====================================================================	-->
+	
+		<src>
+			<folder name="addons/ofx3DUtils/src">
+				<file>../../../addons/ofx3DUtils/src/ofx3DUtils.h</file>
+				<file>../../../addons/ofx3DUtils/src/ofx3DGraphics.h</file>
+				<file>../../../addons/ofx3DUtils/src/ofx3DGraphics.cpp</file>
+				<file>../../../addons/ofx3DUtils/src/ofxCamera.h</file>
+				<file>../../../addons/ofx3DUtils/src/ofxCamera.cpp</file>			
+				<file>../../../addons/ofx3DUtils/src/ofxLight.h</file>
+				<file>../../../addons/ofx3DUtils/src/ofxLight.cpp</file>
+				<file>../../../addons/ofx3DUtils/src/ofxEasyCam.h</file>				
+			</folder>
+		</src>
+		
+		<include>
+			<path>../../../addons/ofx3DUtils/src</path>
+		</include>
+		
+	</add>
+	 
+</install>
+
+
+
+
