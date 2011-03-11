@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		27BF7C171329A61200D75D30 /* ofx3DGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF7C0D1329A61200D75D30 /* ofx3DGraphics.cpp */; };
-		27BF7C181329A61200D75D30 /* ofxCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF7C101329A61200D75D30 /* ofxCamera.cpp */; };
-		27BF7C191329A61200D75D30 /* ofxLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27BF7C131329A61200D75D30 /* ofxLight.cpp */; };
+		276964EF1329C0560037076E /* ofxMatrix3x3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 276964E21329C0560037076E /* ofxMatrix3x3.cpp */; };
+		276964F01329C0560037076E /* ofxMatrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 276964E41329C0560037076E /* ofxMatrix4x4.cpp */; };
+		276964F11329C0560037076E /* ofxQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 276964E91329C0560037076E /* ofxQuaternion.cpp */; };
+		276965321329C0960037076E /* ofx3dGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 276964F31329C0960037076E /* ofx3dGraphics.cpp */; };
 		7700D9111310CB7200EC3715 /* openCV.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7700D7C01310CB7100EC3715 /* openCV.a */; };
 		7700D9121310CB7200EC3715 /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7700D7C31310CB7100EC3715 /* ofxCvColorImage.cpp */; };
 		7700D9131310CB7200EC3715 /* ofxCvContourFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7700D7C61310CB7100EC3715 /* ofxCvContourFinder.cpp */; };
@@ -108,14 +109,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		27BF7C0D1329A61200D75D30 /* ofx3DGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofx3DGraphics.cpp; path = src/ofx3DUtils/src/ofx3DGraphics.cpp; sourceTree = SOURCE_ROOT; };
-		27BF7C0E1329A61200D75D30 /* ofx3DGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofx3DGraphics.h; path = src/ofx3DUtils/src/ofx3DGraphics.h; sourceTree = SOURCE_ROOT; };
-		27BF7C0F1329A61200D75D30 /* ofx3DUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofx3DUtils.h; path = src/ofx3DUtils/src/ofx3DUtils.h; sourceTree = SOURCE_ROOT; };
-		27BF7C101329A61200D75D30 /* ofxCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxCamera.cpp; path = src/ofx3DUtils/src/ofxCamera.cpp; sourceTree = SOURCE_ROOT; };
-		27BF7C111329A61200D75D30 /* ofxCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxCamera.h; path = src/ofx3DUtils/src/ofxCamera.h; sourceTree = SOURCE_ROOT; };
-		27BF7C121329A61200D75D30 /* ofxEasyCam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxEasyCam.h; path = src/ofx3DUtils/src/ofxEasyCam.h; sourceTree = SOURCE_ROOT; };
-		27BF7C131329A61200D75D30 /* ofxLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxLight.cpp; path = src/ofx3DUtils/src/ofxLight.cpp; sourceTree = SOURCE_ROOT; };
-		27BF7C141329A61200D75D30 /* ofxLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxLight.h; path = src/ofx3DUtils/src/ofxLight.h; sourceTree = SOURCE_ROOT; };
+		276964E01329C0560037076E /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = install.xml; path = ../../../addons/ofxVectorMath/install.xml; sourceTree = SOURCE_ROOT; };
+		276964E21329C0560037076E /* ofxMatrix3x3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxMatrix3x3.cpp; path = ../../../addons/ofxVectorMath/src/ofxMatrix3x3.cpp; sourceTree = SOURCE_ROOT; };
+		276964E31329C0560037076E /* ofxMatrix3x3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxMatrix3x3.h; path = ../../../addons/ofxVectorMath/src/ofxMatrix3x3.h; sourceTree = SOURCE_ROOT; };
+		276964E41329C0560037076E /* ofxMatrix4x4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxMatrix4x4.cpp; path = ../../../addons/ofxVectorMath/src/ofxMatrix4x4.cpp; sourceTree = SOURCE_ROOT; };
+		276964E51329C0560037076E /* ofxMatrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxMatrix4x4.h; path = ../../../addons/ofxVectorMath/src/ofxMatrix4x4.h; sourceTree = SOURCE_ROOT; };
+		276964E61329C0560037076E /* ofxPoint2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxPoint2f.h; path = ../../../addons/ofxVectorMath/src/ofxPoint2f.h; sourceTree = SOURCE_ROOT; };
+		276964E71329C0560037076E /* ofxPoint3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxPoint3f.h; path = ../../../addons/ofxVectorMath/src/ofxPoint3f.h; sourceTree = SOURCE_ROOT; };
+		276964E81329C0560037076E /* ofxPoint4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxPoint4f.h; path = ../../../addons/ofxVectorMath/src/ofxPoint4f.h; sourceTree = SOURCE_ROOT; };
+		276964E91329C0560037076E /* ofxQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxQuaternion.cpp; path = ../../../addons/ofxVectorMath/src/ofxQuaternion.cpp; sourceTree = SOURCE_ROOT; };
+		276964EA1329C0560037076E /* ofxQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxQuaternion.h; path = ../../../addons/ofxVectorMath/src/ofxQuaternion.h; sourceTree = SOURCE_ROOT; };
+		276964EB1329C0560037076E /* ofxVec2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVec2f.h; path = ../../../addons/ofxVectorMath/src/ofxVec2f.h; sourceTree = SOURCE_ROOT; };
+		276964EC1329C0560037076E /* ofxVec3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVec3f.h; path = ../../../addons/ofxVectorMath/src/ofxVec3f.h; sourceTree = SOURCE_ROOT; };
+		276964ED1329C0560037076E /* ofxVec4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVec4f.h; path = ../../../addons/ofxVectorMath/src/ofxVec4f.h; sourceTree = SOURCE_ROOT; };
+		276964EE1329C0560037076E /* ofxVectorMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxVectorMath.h; path = ../../../addons/ofxVectorMath/src/ofxVectorMath.h; sourceTree = SOURCE_ROOT; };
+		276964F31329C0960037076E /* ofx3dGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofx3dGraphics.cpp; path = src/utils/ofx3dGraphics.cpp; sourceTree = SOURCE_ROOT; };
+		276964F41329C0960037076E /* ofx3dGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofx3dGraphics.h; path = src/utils/ofx3dGraphics.h; sourceTree = SOURCE_ROOT; };
 		7700D7AA1310CB7100EC3715 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		7700D7AE1310CB7100EC3715 /* cv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cv.h; sourceTree = "<group>"; };
 		7700D7AF1310CB7100EC3715 /* cv.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cv.hpp; sourceTree = "<group>"; };
@@ -215,7 +224,6 @@
 		7700D90E1310CB7200EC3715 /* ofxTrackedUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTrackedUser.h; sourceTree = "<group>"; };
 		7700D90F1310CB7200EC3715 /* ofxUserGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUserGenerator.cpp; sourceTree = "<group>"; };
 		7700D9101310CB7200EC3715 /* ofxUserGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUserGenerator.h; sourceTree = "<group>"; };
-		7700D93D1310CBC400EC3715 /* ofxVectorMath */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ofxVectorMath; path = ../../../addons/ofxVectorMath; sourceTree = SOURCE_ROOT; };
 		77BB9B7213111AFF0008C712 /* change_exec_paths.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = change_exec_paths.sh; sourceTree = "<group>"; };
 		77BB9B7313111AFF0008C712 /* libJPEG.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libJPEG.dylib; sourceTree = "<group>"; };
 		77BB9B7413111AFF0008C712 /* libnimCodecs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libnimCodecs.dylib; sourceTree = "<group>"; };
@@ -325,29 +333,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		27BF7C061329A61200D75D30 /* ofx3DUtils */ = {
+		276964DF1329C0560037076E /* ofxVectorMath */ = {
 			isa = PBXGroup;
 			children = (
-				27BF7C0C1329A61200D75D30 /* src */,
+				276964E01329C0560037076E /* install.xml */,
+				276964E11329C0560037076E /* src */,
 			);
-			name = ofx3DUtils;
-			path = src/ofx3DUtils;
+			name = ofxVectorMath;
+			path = ../../../addons/ofxVectorMath;
 			sourceTree = SOURCE_ROOT;
 		};
-		27BF7C0C1329A61200D75D30 /* src */ = {
+		276964E11329C0560037076E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				27BF7C0D1329A61200D75D30 /* ofx3DGraphics.cpp */,
-				27BF7C0E1329A61200D75D30 /* ofx3DGraphics.h */,
-				27BF7C0F1329A61200D75D30 /* ofx3DUtils.h */,
-				27BF7C101329A61200D75D30 /* ofxCamera.cpp */,
-				27BF7C111329A61200D75D30 /* ofxCamera.h */,
-				27BF7C121329A61200D75D30 /* ofxEasyCam.h */,
-				27BF7C131329A61200D75D30 /* ofxLight.cpp */,
-				27BF7C141329A61200D75D30 /* ofxLight.h */,
+				276964E21329C0560037076E /* ofxMatrix3x3.cpp */,
+				276964E31329C0560037076E /* ofxMatrix3x3.h */,
+				276964E41329C0560037076E /* ofxMatrix4x4.cpp */,
+				276964E51329C0560037076E /* ofxMatrix4x4.h */,
+				276964E61329C0560037076E /* ofxPoint2f.h */,
+				276964E71329C0560037076E /* ofxPoint3f.h */,
+				276964E81329C0560037076E /* ofxPoint4f.h */,
+				276964E91329C0560037076E /* ofxQuaternion.cpp */,
+				276964EA1329C0560037076E /* ofxQuaternion.h */,
+				276964EB1329C0560037076E /* ofxVec2f.h */,
+				276964EC1329C0560037076E /* ofxVec3f.h */,
+				276964ED1329C0560037076E /* ofxVec4f.h */,
+				276964EE1329C0560037076E /* ofxVectorMath.h */,
 			);
 			name = src;
-			path = src/ofx3DUtils/src;
+			path = ../../../addons/ofxVectorMath/src;
+			sourceTree = SOURCE_ROOT;
+		};
+		276964F21329C0960037076E /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				276964F31329C0960037076E /* ofx3dGraphics.cpp */,
+				276964F41329C0960037076E /* ofx3dGraphics.h */,
+			);
+			name = utils;
+			path = src/utils;
 			sourceTree = SOURCE_ROOT;
 		};
 		7700D7A91310CB7100EC3715 /* ofxOpenCv */ = {
@@ -590,7 +614,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				7700D93D1310CBC400EC3715 /* ofxVectorMath */,
+				276964DF1329C0560037076E /* ofxVectorMath */,
 				7700D7A91310CB7100EC3715 /* ofxOpenCv */,
 				7700D7D21310CB7100EC3715 /* ofxOpenNI */,
 			);
@@ -788,7 +812,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				27BF7C061329A61200D75D30 /* ofx3DUtils */,
+				276964F21329C0960037076E /* utils */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
@@ -977,9 +1001,10 @@
 				7700D92D1310CB7200EC3715 /* ofxOpenNIRecorder.cpp in Sources */,
 				7700D92E1310CB7200EC3715 /* ofxTrackedUser.cpp in Sources */,
 				7700D92F1310CB7200EC3715 /* ofxUserGenerator.cpp in Sources */,
-				27BF7C171329A61200D75D30 /* ofx3DGraphics.cpp in Sources */,
-				27BF7C181329A61200D75D30 /* ofxCamera.cpp in Sources */,
-				27BF7C191329A61200D75D30 /* ofxLight.cpp in Sources */,
+				276964EF1329C0560037076E /* ofxMatrix3x3.cpp in Sources */,
+				276964F01329C0560037076E /* ofxMatrix4x4.cpp in Sources */,
+				276964F11329C0560037076E /* ofxQuaternion.cpp in Sources */,
+				276965321329C0960037076E /* ofx3dGraphics.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
