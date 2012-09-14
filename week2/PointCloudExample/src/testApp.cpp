@@ -41,7 +41,7 @@ void testApp::draw() {
 	}
 	float* distancePixels = kinect.getDistancePixels(); // distance in centimeters
 	ofMesh cloud;
-	cloud.setMode(OF_POINTS_MODE);
+	cloud.setMode(OF_PRIMITIVE_POINTS);
 	for(int y = 0; y < height; y++) {
 		for(int x = 0; x < width; x++) {
 			int i = y * width + x;

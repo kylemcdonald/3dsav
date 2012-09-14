@@ -39,7 +39,7 @@ void testApp::update() {
 		int height = kinect.getHeight();
 		float* distancePixels = kinect.getDistancePixels(); // distance in centimeters
 		mesh.clear();
-		mesh.setMode(OF_TRIANGLES_MODE);
+		mesh.setMode(OF_PRIMITIVE_TRIANGLES);
 		for(int y = 0; y < height - 1; y++) { // don't go to the end
 			for(int x = 0; x < width - 1; x++) { // don't go to the end
 			

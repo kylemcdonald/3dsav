@@ -7,21 +7,18 @@ void testApp::setup() {
 	
 	panel.setup(280, 400);
 	panel.addPanel("Settings");
-	panel.addSlider("nearThreshold", 50, 0, 200);
-	panel.addSlider("farThreshold", 200, 0, 200);
+	panel.addSlider("nearThreshold", 500, 0, 2000);
+	panel.addSlider("farThreshold", 2000, 0, 2000);
 	panel.addToggle("nearWhite", true);
 	panel.addToggle("threshold", false);
 	
 	result.allocate(kinect.getWidth(), kinect.getHeight(), OF_IMAGE_GRAYSCALE);
-	
-	// instead of writing all the code below, you can also just write:
-	// ofxKinectCalibration::setClippingInCentimeters(nearThreshold, farThreshold);
 }
 
 void testApp::update() {
 	kinect.update();
 	if(kinect.isFrameNew()) {
-		float* distancePixels = kinect.getDistancePixels(); // distance in centimeters
+		float* distancePixels = kinect.getDistancePixels(); // distance in millimeters
 		unsigned char* resultPixels = result.getPixels();
 		int n = kinect.getWidth() * kinect.getHeight();
 		float nearThreshold = panel.getValueF("nearThreshold");
