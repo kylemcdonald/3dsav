@@ -37,9 +37,9 @@ void testApp::draw() {
 	if(useProjective) {
 		ofTranslate(-width / 2, -height / 2); // center the projective point cloud
 	} else {
-		ofTranslate(0, 0, -150); // rotate about z = 150 cm
+		ofTranslate(0, 0, -1500); // rotate about z = 1500 mm
 	}
-	float* distancePixels = kinect.getDistancePixels(); // distance in centimeters
+	float* distancePixels = kinect.getDistancePixels(); // distance in millimeters
 	ofMesh cloud;
 	cloud.setMode(OF_PRIMITIVE_POINTS);
 	for(int y = 0; y < height; y++) {

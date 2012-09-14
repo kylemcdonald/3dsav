@@ -37,7 +37,7 @@ void testApp::update() {
 	if(kinect.isFrameNew()) { // only recompute the mesh if necessary
 		int width = kinect.getWidth();
 		int height = kinect.getHeight();
-		float* distancePixels = kinect.getDistancePixels(); // distance in centimeters
+		float* distancePixels = kinect.getDistancePixels(); // distance in millimeters
 		mesh.clear();
 		mesh.setMode(OF_PRIMITIVE_TRIANGLES);
 		for(int y = 0; y < height - 1; y++) { // don't go to the end
@@ -91,7 +91,7 @@ void testApp::draw() {
 	
 	easyCam.begin();
 	ofScale(1, -1, -1); // orient the point cloud properly
-	ofTranslate(0, 0, -150); // rotate about z = 150 cm
+	ofTranslate(0, 0, -1500); // rotate about z = 1500 mm
 	glEnable(GL_DEPTH_TEST);
 	ofSetColor(255);
 	if(drawWireframe) {
