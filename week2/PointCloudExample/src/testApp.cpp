@@ -55,7 +55,7 @@ void testApp::draw() {
 			}
 		}
 	}
-	cloud.drawVertices();
+	cloud.draw();
 	easyCam.end();
 	
 	ofSetColor(255);
