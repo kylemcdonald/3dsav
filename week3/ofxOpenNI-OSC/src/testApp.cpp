@@ -22,11 +22,11 @@ void testApp::update(){
 		ofPoint& leftHand = user.getLimb(LIMB_LEFT_LOWER_ARM).getEndJoint().getWorldPosition();
 		ofPoint& rightHand = user.getLimb(LIMB_RIGHT_LOWER_ARM).getEndJoint().getWorldPosition();
 		
-		distance = (leftHand - rightHand).length();
+		distance = leftHand.distance(rightHand);
 		
 		ofxOscMessage msg;
 		msg.setAddress("/distance");
-		msg.addFloatArg(distance);
+		msg.addFloatArg(ofMap(distance, 10, 1000, 0, 1));
 		osc.sendMessage(msg);
 	}
 }
