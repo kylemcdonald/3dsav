@@ -3,27 +3,25 @@
 void testApp::setup() {
 	ofSetVerticalSync(true);
 	openni.setup();
-	openni.addImageGenerator();
-	openni.addDepthGenerator();
-	openni.addUserGenerator();
-	openni.setRegister(true);
+	image.setup(&openni);
+	depth.setup(&openni);
+	user.setup(&openni);
+	openni.registerViewport();
 	openni.setMirror(true);
-	openni.start();
 }
 
 void testApp::update(){
 	openni.update();
+	image.update();
+	depth.update();
+	user.update();
 }
 
 void testApp::draw(){
 	ofBackground(0);
 	ofSetColor(255);
 	ofScale(.75, .75, .75);
-	openni.drawDepth(0, 0, 640, 480);
-	openni.drawImage(640, 0, 640, 480);
-	openni.drawSkeletons(0, 0, 640, 480);
-}
-
-void testApp::exit() {
-	openni.stop();
+	depth.draw(0, 0, 640, 480);
+	image.draw(640, 0, 640, 480);
+	user.draw();
 }

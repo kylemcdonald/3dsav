@@ -9,7 +9,9 @@ public:
 	void setup();
 	void update();
 	void draw();
-	void exit();
 	
-	ofxOpenNI openni;
+	ofxOpenNIContext openni;
+	ofxDepthGenerator depth;
+	ofxImageGenerator image;
+	ofxUserGenerator user;
 };
