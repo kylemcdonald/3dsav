@@ -9,9 +9,9 @@ public:
 	void setup();
 	void update();
 	void draw();
-	void exit();
 	
-	void handEvent(ofxOpenNIHandEvent & event);
-	
-	ofxOpenNI openni;
+	ofxOpenNIContext openni;
+	ofxDepthGenerator depth;
+	ofxImageGenerator image;
+	ofxHandGenerator hands;
 };

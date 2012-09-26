@@ -10,9 +10,14 @@ public:
 	void setup();
 	void update();
 	void draw();
-	void exit();
 	
-	ofxOpenNI openni;
-	ofxOscSender osc;
+	ofVec3f ConvertProjectiveToRealWorld(const XnPoint3D& p);
+	
+	ofxOpenNIContext openni;
+	ofxDepthGenerator depth;
+	ofxImageGenerator image;
+	ofxUserGenerator user;
 	float distance;
+	
+	ofxOscSender osc;
 };

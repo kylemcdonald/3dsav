@@ -1,15 +1,20 @@
 #include "testApp.h"
 
+ofVec3f testApp::ConvertProjectiveToRealWorld(const XnPoint3D& p) {
+	XnPoint3D world;
+	depth.getXnDepthGenerator().ConvertProjectiveToRealWorld(1, &p, &world);
+	return ofVec3f(world.X, world.Y, world.Z);
+}
+
 void testApp::setup() {
 	ofSetVerticalSync(true);
 	openni.setup();
-	openni.addImageGenerator();
-	openni.addDepthGenerator();
-	openni.addUserGenerator();
-	openni.setRegister(true);
+	image.setup(&openni);
+	depth.setup(&openni);
+	user.setup(&openni);
+	openni.registerViewport();
 	openni.setMirror(true);
-	openni.start();
-	
+
 	osc.setup("localhost", 8000);
 	
 	distance = 0;
@@ -17,10 +22,13 @@ void testApp::setup() {
 
 void testApp::update(){
 	openni.update();
-	if(openni.getNumTrackedUsers() > 0) {
-		ofxOpenNIUser& user = openni.getTrackedUser(0);
-		ofPoint& leftHand = user.getLimb(LIMB_LEFT_LOWER_ARM).getEndJoint().getWorldPosition();
-		ofPoint& rightHand = user.getLimb(LIMB_RIGHT_LOWER_ARM).getEndJoint().getWorldPosition();
+	image.update();
+	depth.update();
+	user.update();
+	if(user.getNumberOfTrackedUsers() > 0) {
+		ofxTrackedUser* cur = user.getTrackedUser(1); // old API starts users at 1, not 0
+		ofVec3f leftHand = ConvertProjectiveToRealWorld(cur->left_lower_arm.position[1]);
+		ofVec3f rightHand = ConvertProjectiveToRealWorld(cur->right_lower_arm.position[1]);
 		
 		distance = leftHand.distance(rightHand);
 		
@@ -35,12 +43,8 @@ void testApp::draw(){
 	ofBackground(0);
 	ofSetColor(255);
 	ofScale(.75, .75, .75);
-	openni.drawDepth(0, 0, 640, 480);
-	openni.drawImage(640, 0, 640, 480);
-	openni.drawSkeletons(0, 0, 640, 480);
+	depth.draw(0, 0, 640, 480);
+	image.draw(640, 0, 640, 480);
+	user.draw();
 	ofRect(0, 10, distance, 10);
-}
-
-void testApp::exit() {
-	openni.stop();
 }
