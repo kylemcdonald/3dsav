@@ -8,6 +8,7 @@ void testApp::setup() {
 	hands.setup(&openni, 4);
 	openni.registerViewport();
 	openni.setMirror(true);
+	img.set(0);
 }
 
 void testApp::update(){

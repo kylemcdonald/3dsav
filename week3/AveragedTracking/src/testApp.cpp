@@ -15,12 +15,19 @@ ofVec3f ConvertProjectiveToRealWorld(float x, float y, float z) {
 
 void testApp::setup() {
 	ofSetVerticalSync(true);
-	kinect.init(false, false);  // disable infrared/rgb video iamge (faster fps)
+	kinect.init(true, true);  // disable infrared/rgb video iamge (faster fps)
 	kinect.open();
+	timer.setPeriod(1);
 }
 
 void testApp::update() {
 	kinect.update();
+	if(timer.tick()) {
+		ofImage img;
+		img.allocate(640, 480, OF_IMAGE_GRAYSCALE);
+		memcpy(img.getPixels(), kinect.getPixels(), 640 * 480);
+		img.saveImage(ofToString(ofGetFrameNum()) + ".png");
+	}
 }
 
 void testApp::draw() {
@@ -57,6 +64,7 @@ void testApp::draw() {
 	
 	ofSetColor(255);
 	kinect.drawDepth(0, 0);
+	kinect.draw(640, 0);
 	ofSetColor(255, 0, 0);
 	ofNoFill();
 	int searchRadius = 128;

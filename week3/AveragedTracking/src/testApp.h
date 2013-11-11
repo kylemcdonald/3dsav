@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxKinect.h"
 
+#include "DelayTimer.h"
 class testApp : public ofBaseApp {
 public:
 	void setup();
@@ -13,4 +14,5 @@ public:
 	ofVec3f smoothedForepoint;
 	ofxKinect kinect;
 	ofEasyCam easyCam;
+	DelayTimer timer;
 };
